@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www..thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--========== BOX ICONS ==========-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- boot -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--========== CSS ==========-->
+    <link rel="stylesheet" href="/src/main/resources/static/css/data.css">
+    <link th:href="@{/css/data.css}" rel="stylesheet" />
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <title>Data System</title>
+    <style>
+        tbody tr td:last-child {
+            color: red;
+        }
+        
+        .active1 {
+            background-color: palevioletred;
+            color: aliceblue;
+        }
+        
+        .active2 {
+            background-color: palevioletred;
+            color: aliceblue;
+        }
+    </style>
+</head>
+
+<body>
+    <!--========== HEADER ==========-->
+    <header class="header">
+        <div class="header__container">
+
+            <img src="http://127.0.0.1:3000/src/main/resources/static/images/logo.png" alt="" class="header__img">
+            <a href="#" class="header__logo">School System</a>
+
+            <div class="header__search">
+                <input type="search" placeholder="Search" class="header__input">
+                <!-- <i class='bx bx-search header__icon'></i> -->
+            </div>
+
+            <div class="header__toggle">
+                <i class='bx bx-menu' id="header-toggle"></i>
+            </div>
+        </div>
+    </header>
+
+    <!--========== option to show data form navbar ==========-->
+    <div class="nav" id="navbar">
+        <div class="sidebar">
+            <nav class="nav__container">
+                <div>
+                    <!-- for home page GIC -->
+                    <a href="#homepage" class="nav__link nav__logo">
+                        <i class='bx bxs-school nav__icon' style="font-size: 30px; color: #000000;"></i>
+                        <span class="nav__logo-name" style="font-size: large;">GIC SMS</span>
+                    </a>
+                    <!-- Dash Board -->
+                    <div class="nav__list">
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Dashboard</h3>
+
+                            <a href="#" class="nav__link active" onclick="showContent('content1')">
+                                <i class='bx bxs-dashboard nav__icon' style="font-size: 30px;"></i>
+                                <span class="nav__name">Data</span>
+                            </a>
+
+
+
+                            <a href="#" class="nav__link" onclick="showContent('content3')">
+                                <i class='bx bxl-microsoft-teams nav__icon' style="font-size: 30px;"></i>
+                                <span class="nav__name">Manage</span>
+                            </a>
+                            <a href="#" class="nav__link " onclick="showContent('content4')">
+                                <i class='bx bxs-duplicate nav__icon' style="font-size: 30px;"></i>
+                                <span class="nav__name">System</span>
+                            </a>
+                        </div>
+
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Menu</h3>
+                            <div class="nav__drop">
+                                <a href="#" class="nav__link" onclick="showContent('content2')">
+                                    <i class='bx bxs-graduation nav__icon' style="font-size: 30px;"></i>
+                                    <span class="nav__name">Rank Student</span>
+                                </a>
+                            </div>
+                            <a href="#" class="nav__link" onclick="showContent('content5')">
+                                <i class='bx  bxs-megaphone nav__icon' style="font-size: 30px;"></i>
+                                <span class="nav__name">Announcement</span>
+                            </a>
+                            <a href="#" class="nav__link" onclick="showContent('content6')">
+                                <i class='bx bx-calendar nav__icon' style="font-size: 30px;"></i>
+                                <span class="nav__name">Events</span>
+                            </a>
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-bookmark nav__icon' style="font-size: 30px;"></i>
+                                <span class="nav__name">Saved</span>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="nav__link nav__logout">
+                    <i class='bx bx-log-out nav__icon'></i>
+                    <span class="nav__name">Log Out</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+    <script>
+        const showMenu = (headerToggle, navbarId) => {
+            const toggleBtn = document.getElementById(headerToggle),
+                nav = document.getElementById(navbarId)
+                // Validate that variables exist
+            if (headerToggle && navbarId) {
+                toggleBtn.addEventListener('click', () => {
+                    // We add the show-menu class to the div tag with the nav__menu class
+                    nav.classList.toggle('show-menu')
+                        // change icon
+                    toggleBtn.classList.toggle('bx-x')
+                })
+            }
+        }
+        showMenu('header-toggle', 'navbar')
+            /*==================== LINK ACTIVE ====================*/
+        const linkColor = document.querySelectorAll('.nav__link')
+
+        function colorLink() {
+            linkColor.forEach(l => l.classList.remove('active'))
+            this.classList.add('active')
+        }
+        linkColor.forEach(l => l.addEventListener('click', colorLink))
+    </script>
+
+    <!--========== CONTENTS ==========-->
+    <main>
+        <div class="sidebar">
+            <div id="content1" style="display: block;"> <br> <br>
+                <div class="container">
+                    <!-- page 1 about home -->
+                    <section>
+                        <main>
+                            <!-- Analyses -->
+                            <div class="analyse">
+                                <div class="totalTeachers" style="background-color: #fd81b3;">
+                                    <div class="totalTeachers">
+                                        <div class="info" style="text-align: center;">
+                                            <h2>Total Teacher</h2>
+                                            <h1 th:text="${totalTeachers}">100</h1>
+                                            <p style="display: flex; justify-content: space-around;">
+                                                <label for="male"><strong th:text="${totalMaleTeachers}">70</strong>&nbsp;&nbsp;Male</label>
+                                                <label for="">|</label>
+                                                <label for="female"><strong th:text="${totalFemaleTeachers}">30</strong>&nbsp;&nbsp;Female</label>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="totalStudent" style="background-color: #FEFFAC;">
+                                    <div class="totalStudent">
+                                        <div class="info" style="text-align: center;">
+                                            <h2>Total Student</h2>
+                                            <h1>106</h1>
+                                            <p style="display: flex; justify-content: space-around;">
+                                                <label for="male"><strong th:text="${totalMaleTeachers}">56</strong>&nbsp;&nbsp;Male</label>
+                                                <label for="">|</label>
+                                                <label for="female"><strong th:text="${totalFemaleTeachers}">50</strong>&nbsp;&nbsp;Female</label>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="allsubject" style="background-color: #45FFCA;">
+                                    <div class="allsubject">
+                                        <div class="info" style="text-align: center;">
+                                            <h2>All Subject</h2>
+                                            <h1>20</h1>
+                                            <p>Score info</p>
+                                            <p style="display: flex; justify-content: space-around;">
+                                                <label for="minscore">30 &gt; fail</label>
+                                                <label>|</label>
+                                                <label for="term2">30 &lt; pass</label>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="searches" style="background-color: #ff437b;">
+                                    <div class="status">
+                                        <div class="info">
+                                            <h2 style="text-align: center;">Top 3 Student</h2>
+                                            <p></p>
+                                            <P style="display: flex; justify-content: space-around;">
+                                                <label style="color: gold;"><i class='bx bx-medal'></i></label>
+                                                <Label>Hia Kimsreng</Label>
+                                            </P>
+                                            <P style="display: flex; justify-content: space-around;">
+                                                <label style="color: silver;">&nbsp;<i class='bx bx-medal'></i><i class='bx bx-medal'></i></label>
+                                                <Label>Channa Sivlong</Label>
+
+                                            </P>
+                                            <P style="display: flex; justify-content: space-around;">
+                                                <label style="color: brown;"><i class='bx bx-medal'></i><i class='bx bx-medal'></i><i class='bx bx-medal'></i></label>
+                                                <Label>Eng Sokchheng</Label>
+                                            </P>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                    </section> <br><br>
+                    <section>
+                        <div class="d-flex justify-content-center" style="gap: 1.6rem;">
+                            <div class="grahp1 ">
+                                <div id="myChart" style="width:100%; width:645px; height:400px;"></div>
+                                <script th:inline="javascript">
+                                    google.charts.load('current', {
+                                        'packages': ['corechart']
+                                    });
+                                    google.charts.setOnLoadCallback(drawChart);
+
+                                    function drawChart() {
+                                        // Set Data
+                                        const data = google.visualization.arrayToDataTable([
+                                            ['Contry', 'Mhl'],
+                                            ['GPA 4.0', 54.8],
+                                            ['GPA 3.5', 48.6],
+                                            ['GPA 3.0', 44.4],
+                                            ['GPA 2.5', 23.9],
+                                            ['GPA 2.0', 14.5],
+                                            ['GPA 1.5', 1]
+                                        ]);
+
+                                        // Set Options
+                                        const options = {
+                                            title: 'Grade Student'
+                                        };
+                                        // Draw
+                                        const chart = new google.visualization.PieChart(document.getElementById('myChart'));
+                                        chart.draw(data, options);
+                                    }
+                                </script>
+                            </div>
+                            <div class="grahp2">
+                                <div id="newChart" style="width:100%; width:645px; height:400px;"></div>
+                                <script>
+                                    google.charts.load('current', {
+                                        packages: ['corechart']
+                                    });
+                                    google.charts.setOnLoadCallback(drawChart);
+
+                                    function drawChart() {
+
+                                        // Set Data
+                                        const data = google.visualization.arrayToDataTable([
+                                            ['score :', 'students'],
+                                            [0, 0],
+                                            [10, 7],
+                                            [20, 8],
+                                            [30, 8],
+                                            [40, 9],
+                                            [50, 9],
+                                            [60, 9],
+                                            [70, 10],
+                                            [80, 11],
+                                            [90, 14],
+                                            [100, 6]
+                                        ]);
+
+                                        // Set Options
+                                        const options = {
+                                            title: 'Average Score Vs Student',
+                                            hAxis: {
+                                                title: 'Score'
+                                            },
+                                            vAxis: {
+                                                title: 'All Student'
+                                            },
+                                            legend: 'none'
+                                        };
+                                        // Draw
+                                        const chart = new google.visualization.LineChart(document.getElementById('newChart'));
+                                        chart.draw(data, options);
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- rank of student -->
+            <div id="content2" style="display: none"><br>
+                <!-- table rank or student -->
+                <div class="container justify-content">
+                    <h2>Rank of Student in Term1</h2>
+                    <p>If you have some problem with your scores, you can ask your teacher</p><br>
+                </div>
+                <div>
+                    <section class="intro">
+                        <div class="gradient-custom-1 h-100 w-aut">
+                            <div class="mask d-flex align-items-center h-100">
+                                <div class="container">
+
+                                    <div class="row justify-content-center">
+                                        <div class="col-15">
+                                            <div class="table-responsive bg-white">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr class="bg-black">
+                                                            <th scope="col">ID</th>
+                                                            <th scope="col">NAME</th>
+                                                            <th scope="col">Group</th>
+                                                            <th scope="col">OOP</th>
+                                                            <th scope="col">MATH</th>
+                                                            <th scope="col">ALGO</th>
+                                                            <th scope="col">RESEARCH</th>
+                                                            <th scope="col">ENGLISH</th>
+                                                            <th scope="col">C++</th>
+                                                            <th scope="col">TOTAL SCORE</th>
+                                                            <th scope="col">AVERAGE</th>
+                                                            <th scope="col">RANK</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row" style="color: #666666;">e20210429</th>
+                                                            <td>CHAN SUVANNET</td>
+                                                            <td>A</td>
+                                                            <td>30</td>
+                                                            <td>50</td>
+                                                            <td>60</td>
+                                                            <td>60</td>
+                                                            <td>50</td>
+                                                            <td>40</td>
+                                                            <td>290</td>
+                                                            <td>48.33</td>
+                                                            <td>10</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- manage -->
+            <div id="content3" style="display: none"><br>
+                <div class="container justify-content">
+                    <div class="info">
+                        <div class="d-flex justify-content-center">
+                            <a type="button" class="btn active2" onclick="showInfo('info1')" id="infoLink1">All Teacher</a>
+                            <a type="button" class="btn" onclick="showInfo('info2')" id="infoLink2">All Students</a>
+                            <a type="button" class="btn" onclick="showInfo('info3')" id="infoLink3">Assign Score For</a>
+                            <a type="button" class="btn" onclick="showInfo('info4')" id="infoLink4">Update announcement</a>
+                        </div><br>
+                        <script>
+                            const infoLink1 = document.getElementById('infoLink1');
+                            const infoLink2 = document.getElementById('infoLink2');
+                            const infoLink3 = document.getElementById('infoLink3');
+                            const infoLink4 = document.getElementById('infoLink4');
+
+                            const links_info = [infoLink1, infoLink2, infoLink3, infoLink4];
+
+                            function colorLink(event) {
+                                links_info.forEach(link => link.classList.remove('active2'));
+                                event.target.classList.add('active2');
+                            }
+
+                            links_info.forEach(link => link.addEventListener('click', colorLink));
+                        </script>
+                        <!-- Information content -->
+                        <div id="info1" class="info-content" style="display: block;"><br>
+                            <!-- all teacher  -->
+                            <h2>All Teacher</h2><br>
+                            <section class="intro">
+                                <div class="gradient-custom-1 h-100 w-aut">
+                                    <div class="mask d-flex align-items-center h-100">
+                                        <div class="container">
+                                            <div class="row justify-content-center">
+                                                <div class="col-15">
+                                                    <div class="table-responsive" style="text-align: center;">
+                                                        <table class="table mb-0">
+                                                            <thead>
+                                                                <tr class="bg-black">
+                                                                    <th scope="col">ID</th>
+                                                                    <th scope="col">Name</th>
+                                                                    <th scope="col">Gender</th>
+                                                                    <th scope="col">Degree</th>
+                                                                    <th scope="col">Subject</th>
+                                                                    <th scope="col">Phone</th>
+                                                                    <th scope="col">Email</th>
+                                                                    <th scope="col">Time/week</th>
+                                                                    <th scope="col"><i class='bx bx-edit-alt' style="font-size: 25px;"></i></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="teacher : ${teachers}">
+                                                                    <th scope="row" style="color: #666666;" th:text="${teacher.id}">
+                                                                    </th>
+                                                                    <td>
+                                                                        <label th:text="${teacher.firstName}"></label>
+                                                                        <label th:text="${teacher.lastName}"></label>
+                                                                    </td>
+                                                                    <td th:text="${teacher.gender}"></td>
+                                                                    <td th:text="${teacher.degree}"></td>
+                                                                    <td th:text="${teacher.subject}"></td>
+                                                                    <td th:text="${teacher.phone}"></td>
+                                                                    <td th:text="${teacher.email}"></td>
+                                                                    <td th:text="${teacher.workTime}"></td>
+                                                                    <td>
+                                                                        <label for="edit">
+                                                                <a th:href="@{/showFormForUpdate/{number}(number=${teacher.number})}"
+                                                                    class="h4 btn btn-primary">Edit</a>
+                                                                <a th:href="@{/deleteTeacher/{number}(number=${teacher.number})}"
+                                                                    class="h4 btn btn-danger">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section> <br>
+                        </div>
+                        <div id="info2" class="info-content" style="display: none;"><br>
+                            <!-- Content for information section -->
+                        </div>
+                        <div id="info3" class="info-content" style="display: none;"><br>
+                            <!-- Content for information section -->
+                        </div>
+                        <div id="info4" class="info-content" style="display: none;"><br>
+                            <!-- Content for information section -->
+                        </div>
+                        <script>
+                            function showInfo(infoId) {
+                                const infoContents = document.querySelectorAll('.info-content');
+                
+                                infoContents.forEach(content => {
+                                    content.style.display = 'none';
+                                });
+                
+                                const selectedInfo = document.getElementById(infoId);
+                                if (selectedInfo) {
+                                    selectedInfo.style.display = 'block';
+                                }
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <!-- content 4 -->
+            <div id="content4" style="display: none"><br>
+                <div class="system-sidebar">
+                    <div class="d-flex justify-content-center">
+                        <a type="button" class="btn active1 " onclick="showSystem('system1')" id="homeLink">Add New
+                            Teacher</a>
+                        <a type="button" class="btn" onclick="showSystem('system2')" id="aboutLink">Add New
+                            Student</a>
+                        <a type="button" class="btn" onclick="showSystem('system3')" id="subjectLink">Add New
+                            Subject</a>
+                        <a type="button" class="btn" onclick="showSystem('system4')" id="announcementLink"> Add New
+                            Announcement</a>
+                    </div><br>
+                    <script>
+                        const homeLink = document.getElementById('homeLink');
+                        const aboutLink = document.getElementById('aboutLink');
+                        const subjectLink = document.getElementById('subjectLink');
+                        const announcementLink = document.getElementById('announcementLink');
+
+                        const links = [homeLink, aboutLink, subjectLink, announcementLink];
+
+                        function colorLink(event) {
+                            links.forEach(link => link.classList.remove('active1'));
+                            event.target.classList.add('active1');
+                        }
+
+                        links.forEach(link => link.addEventListener('click', colorLink));
+                    </script>
+                    <!-- add new teacher -->
+                    <div id="system1" class="system-content" style="display: block;"><br>
+                        <h2 class="d-flex justify-content-center" style="color: palevioletred;">ADD NEW TEACHER</h2><br>
+                        <div class="d-flex justify-content-center">
+                            <div class="container h-100">
+                                <form class="row g-3" th:action="@{/saveTeacher}" th:object="${newTeacher}"
+                                    method="POST">
+                                    <div class="col-md-6">
+                                        <label for="firstName_teacher" class="form-label">First Name</label>
+                                                                        <input type="text" class="form-control" id="firstName_teacher" th:field="*{firstName}" required />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="lastName_techer" class="form-label">Last Name</label>
+                                                        <input type="text" class="form-control" id="lastName_techer" th:field="*{lastName}" required />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="IDTeacher" class="form-label">ID Teacher </label>
+                                                        <input type="text" class="form-control" id="IDTeacher" th:field="*{id}" required />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="degreeTeacher" class="form-label">Degree</label>
+                                                        <input type="text" class="form-control" id="degreeTeacher" th:field="*{degree}" required />
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="inputEmail4" class="form-label">Subject</label>
+                                                        <input type="text" class="form-control" id="inputEmail4" th:field="*{subject}">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="inputPassword4" class="form-label">Time Work</label>
+                                                        <input type="text" class="form-control" id="inputPassword4" th:field="*{workTime}">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="Phone_number_teacher" class="form-label">Phone Number</label>
+                                                        <input type="text" class="form-control" id="Phone_number_teacher" th:field="*{phone}" required />
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="email_teacher" class="form-label">Email</label>
+                                                        <input type="text" class="form-control" id="email_teacher" th:field="*{email}">
+                                                    </div>
+                                                    <!-- Existing form elements... -->
+                                                    <div class="col-12">
+                                                        <div class="col-md-6" style="display: flex; gap: 30px; text-align: center;">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="gender" id="male" value="Male" th:field="*{gender}" required />
+                                                                <label class="form-check-label" for="male">Male</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="gender" id="female" value="Female" th:field="*{gender}" />
+                                                                <label class="form-check-label" for="female">Female</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Other form elements... -->
+                                                    <div class="col-12">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="gridCheck" required />
+                                                            <label class="form-check-label" for="gridCheck">
+                                                Confirm From
+                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- add new student -->
+                                        <div id="system2" class="system-content" style="display: none;"><br>
+                                            <h2 class="d-flex justify-content-center" style="color: palevioletred;">ADD NEW STUDENT</h2><br>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="container h-100">
+                                                    <!-- form for add new student -->
+                                                    <form class="row g-3">
+                                                        <div class="col-md-6">
+                                                            <label for="FisrtName_stu" class="form-label">First Name</label>
+                                                            <input type="text" class="form-control" id="Fname_stu" required/>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="LastName_stu" class="form-label">Last Name</label>
+                                                            <input type="text" class="form-control" id="Lname_stu" required/>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="id_stu" class="form-label">ID Student</label>
+                                                            <input type="text" class="form-control" id="id_stu" required/>
+                                                        </div>
+                                                        <div class="col-md-6" style="padding-top: 9px;">
+                                                            <label for="inputPassword4" class="form-label">Group</label>
+                                                            <div class="col-md-6" style="display: flex; gap: 30px; text-align: center;">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="Group" id="a" value="A" required />
+                                                                    <label class="form-check-label" for="GroupA">A</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="Group" id="b" value="B" />
+                                                                    <label class="form-check-label" for="GroupB">B</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="Group" id="c" value="C" />
+                                                                    <label class="form-check-label" for="GroupC">C</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="Group" id="d" value="D" />
+                                                                    <label class="form-check-label" for="GroupD">D</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <label for="academy_stu" class="form-label">Academy Year</label>
+                                                            <input type="text" class="form-control" id="academy_stu" required/>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label for="dp_stu" class="form-label">Department</label>
+                                                            <input type="text" class="form-control" id="dp_stu" required/>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label for="phone_stu" class="form-label">Phone Number</label>
+                                                            <input type="text" class="form-control" id="phone_stu" required/>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label for="email_stu" class="form-label">Email</label>
+                                                            <input type="text" class="form-control" id="email_stu" required/>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="col-md-6" style="display: flex; gap: 30px; text-align: center;">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="gender_stu" id="male" value="Male" required />
+                                                                    <label class="form-check-label" for="male">Male</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="gender_stu" id="female" value="Female" />
+                                                                    <label class="form-check-label" for="female">Female</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="dob_stu" class="form-label">Date Of Birth</label>
+                                                            <input type="date" class="form-control" id="dob_stu" required/>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="inputState" class="form-label">State</label>
+                                                            <input type="text" class="form-control" id="state_stu" required/>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label for="general_stu" class="form-label">General</label>
+                                                            <input type="text" class="form-control" id="inputZip">
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                                                <label class="form-check-label" for="gridCheck">
+                                                Confirm From
+                                            </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <button type="submit" class="btn btn-primary">&nbsp;Submit&nbsp;</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- time table  -->
+                                        <div id="system3" class="system-content" style="display: none;">
+
+                                        </div>
+                                        <!-- announcement -->
+                                        <div id="system4" class="system-content" style="display: none;">
+                                            <h1>System 4</h1>
+                                        </div>
+                                        <script>
+                                            function showSystem(systemId) {
+                                                const systems = document.querySelectorAll('.system-content');
+
+                                                systems.forEach(system => {
+                                                    system.style.display = 'none';
+                                                });
+
+                                                const selectedSystem = document.getElementById(systemId);
+                                                if (selectedSystem) {
+                                                    selectedSystem.style.display = 'block';
+                                                }
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                                <!-- announcement -->
+                                <div id="content5" style="display: none;">
+                                    <h1>hello</h1>
+                                    <div>
+                                        <!-- principle -->
+                                        <section class="intro">
+                                            <div class="gradient-custom-1 h-100 w-aut">
+                                                <div class="mask d-flex align-items-center h-100">
+                                                    <div class="container">
+                                                        <p></p>
+                                                        <div class="row justify-content-center">
+                                                            <div class="row">
+                                                                <div class="col-sm-4">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <h5 class="card-title">Principle</h5>
+                                                                            <p class="card-text">Can GRUD teacher, Student and Calculate final score students</p>
+                                                                            <a href="#" class="btn btn-primary">Login</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <h5 class="card-title">Teachers</h5>
+                                                                            <p class="card-text">Can assign score to students and update score
+                                                                            </p>
+                                                                            <a href="#" class="btn btn-danger">Login</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="card ">
+                                                                        <div class="card-body">
+                                                                            <h5 class="card-title">Students</h5>
+                                                                            <p class="card-text">Request Teacher to review Score again in one subject</p>
+                                                                            <a href="#" class="btn btn-warning">Login</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section> <br>
+                                    </div>
+                                    <!-- teacher -->
+                                    <section class="intro">
+                                        <div class="gradient-custom-1 h-100 w-aut">
+                                            <div class="mask d-flex align-items-center h-100">
+                                                <div class="container">
+                                                    <p></p>
+                                                    <div class="row justify-content-center">
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">Principle</h5>
+                                                                        <p class="card-text">Can GRUD teacher, Student and Calculate final score students</p>
+                                                                        <a href="#" class="btn btn-primary">Login</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="card">
+                                                                    <div class="card-body bg-warning">
+                                                                        <h5 class="card-title">Teachers</h5>
+                                                                        <p class="card-text">Can assign score to students and update score
+                                                                        </p>
+                                                                        <a href="#" class="btn btn-danger">Login</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section> <br>
+                                    <!-- Student -->
+                                    <section class="intro">
+                                        <div class="gradient-custom-1 h-100 w-aut">
+                                            <div class="mask d-flex align-items-center h-100">
+                                                <div class="container">
+                                                    <p></p>
+                                                    <div class="row justify-content-center">
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <div class="card bg-primary">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">Principle</h5>
+                                                                        <p class="card-text">Can GRUD teacher, Student and Calculate final score students</p>
+                                                                        <a href="#" class="btn btn-light">Login</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </section>
+                                    </div>
+                                </div>
+    </main>
+
+    <!--========== MAIN JS ==========-->
+    <script src="/src/main/resources/static/js/main.js"></script>
+    <!--========== MAIN JS ==========-->
+    <script th:src="@{/js/main.js}"></script>
+
+    <!-- function for display content -->
+    <script>
+        function showContent(contentId) {
+            const contents = document.querySelectorAll(".sidebar > div");
+
+            contents.forEach((content) => {
+                content.style.display = "none";
+            });
+
+            const selectedContent = document.getElementById(contentId);
+            if (selectedContent) {
+                selectedContent.style.display = "block";
+            }
+        }
+    </script>
+</body>
+
+</html>

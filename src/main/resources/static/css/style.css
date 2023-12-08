@@ -1,0 +1,66 @@
+/* styles.css */
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    
+    font-family: Arial, sans-serif;
+    background-color: #F1F1F1;
+    margin: 0;
+    padding: 0;
+}
+
+.head {
+    padding-top: 70px;
+    width: 80%;
+    margin: 50px auto;
+    text-align: center;
+}
+
+#page_title{
+    padding-top: 15px;
+    color: #8348E6;
+    font-weight: 100;
+    font-size: 80px;
+}
+
+p { 
+    padding-top: 15px;
+    color: #666;
+    font-size: 20px;
+}
+.option{
+    text-align: center;
+}
+#header-item a{
+    text-align: center;
+    font-size: 22px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    margin-left: 35px;
+    transition: 0.1s ease ;
+}
+#login{
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgb(22, 72, 238);
+}
+#login a.active{
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgb(22, 72, 238);
+}
+#header-item a:hover,
+#header-item a.active{
+    color: rgb(22, 72, 238);
+    padding: 13px;
+    background-color: rgb(61, 50, 221);
+    border-radius: 10px;
+}
+#header-item a.active:last-child{
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgb(255, 22, 236);
+}
