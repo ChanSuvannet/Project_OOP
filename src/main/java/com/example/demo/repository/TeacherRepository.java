@@ -14,4 +14,5 @@ import com.example.demo.model.Teacher;
 public interface TeacherRepository extends JpaRepository <Teacher, Long>{
     
     List<Teacher> findByGender(String string);
+    Optional<Teacher> findById(String id);
 }

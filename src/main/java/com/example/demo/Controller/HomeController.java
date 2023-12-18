@@ -34,7 +34,7 @@ public class HomeController {
         int totalFemaleTeachers = teacherService.getTotalFemaleTeachers();
         model.addAttribute("totalMaleTeachers", totalMaleTeachers);
         model.addAttribute("totalFemaleTeachers", totalFemaleTeachers);
-        System.out.println("Loading data page"); // Just for logging, if needed
+        System.out.println("Loading data page");
         return "data";
     }
 
@@ -53,7 +53,7 @@ public class HomeController {
     // for update teacher
     @GetMapping("/showFormForUpdate/{number}")
 	public String showFormForUpdate(@PathVariable ( value = "number") long number, Model model) {
-		Teacher teacher = teacherService.getEmployeeByNumber(number);
+		Teacher teacher = teacherService.getTeacherByNumber(number);
 		model.addAttribute("teacher", teacher);
 		return "update";
 	}

@@ -154,11 +154,13 @@
                                     <div class="totalTeachers">
                                         <div class="info" style="text-align: center;">
                                             <h2>Total Teacher</h2>
-                                            <h1 th:text="${totalTeachers}">100</h1>
+                                            <h1 th:text="${totalTeachers}">0</h1>
                                             <p style="display: flex; justify-content: space-around;">
-                                                <label for="male"><strong th:text="${totalMaleTeachers}">70</strong>&nbsp;&nbsp;Male</label>
+                                                <label for="male"><strong
+                                                        th:text="${totalMaleTeachers}">0</strong>&nbsp;&nbsp;Male</label>
                                                 <label for="">|</label>
-                                                <label for="female"><strong th:text="${totalFemaleTeachers}">30</strong>&nbsp;&nbsp;Female</label>
+                                                <label for="female"><strong
+                                                        th:text="${totalFemaleTeachers}">0</strong>&nbsp;&nbsp;Female</label>
                                             </p>
                                         </div>
                                     </div>
@@ -167,11 +169,13 @@
                                     <div class="totalStudent">
                                         <div class="info" style="text-align: center;">
                                             <h2>Total Student</h2>
-                                            <h1>106</h1>
+                                            <h1>0</h1>
                                             <p style="display: flex; justify-content: space-around;">
-                                                <label for="male"><strong th:text="${totalMaleTeachers}">56</strong>&nbsp;&nbsp;Male</label>
+                                                <label for="male"><strong
+                                                        >0</strong>&nbsp;&nbsp;Male</label>
                                                 <label for="">|</label>
-                                                <label for="female"><strong th:text="${totalFemaleTeachers}">50</strong>&nbsp;&nbsp;Female</label>
+                                                <label for="female"><strong
+                                                        >0</strong>&nbsp;&nbsp;Female</label>
                                             </p>
                                         </div>
                                     </div>
@@ -179,20 +183,6 @@
                                 <div class="allsubject" style="background-color: #45FFCA;">
                                     <div class="allsubject">
                                         <div class="info" style="text-align: center;">
-                                            <h2>All Subject</h2>
-                                            <h1>20</h1>
-                                            <p>Score info</p>
-                                            <p style="display: flex; justify-content: space-around;">
-                                                <label for="minscore">30 &gt; fail</label>
-                                                <label>|</label>
-                                                <label for="term2">30 &lt; pass</label>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="searches" style="background-color: #ff437b;">
-                                    <div class="status">
-                                        <div class="info">
                                             <h2 style="text-align: center;">Top 3 Student</h2>
                                             <p></p>
                                             <P style="display: flex; justify-content: space-around;">
@@ -200,14 +190,24 @@
                                                 <Label>Hia Kimsreng</Label>
                                             </P>
                                             <P style="display: flex; justify-content: space-around;">
-                                                <label style="color: silver;">&nbsp;<i class='bx bx-medal'></i><i class='bx bx-medal'></i></label>
+                                                <label style="color: silver;">&nbsp;<i class='bx bx-medal'></i><i
+                                                        class='bx bx-medal'></i></label>
                                                 <Label>Channa Sivlong</Label>
 
                                             </P>
                                             <P style="display: flex; justify-content: space-around;">
-                                                <label style="color: brown;"><i class='bx bx-medal'></i><i class='bx bx-medal'></i><i class='bx bx-medal'></i></label>
+                                                <label style="color: brown;"><i class='bx bx-medal'></i><i
+                                                        class='bx bx-medal'></i><i class='bx bx-medal'></i></label>
                                                 <Label>Eng Sokchheng</Label>
                                             </P>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="searches" style="background-color: #ff437b;">
+                                    <div class="">
+                                        <div class="info" style="text-align: center;">
+                                            <h2>All Subject</h2>
+                                            <h1>20</h1>
                                         </div>
                                     </div>
                                 </div>
@@ -357,10 +357,12 @@
                 <div class="container justify-content">
                     <div class="info">
                         <div class="d-flex justify-content-center">
-                            <a type="button" class="btn active2" onclick="showInfo('info1')" id="infoLink1">All Teacher</a>
+                            <a type="button" class="btn active2" onclick="showInfo('info1')" id="infoLink1">All
+                                Teacher</a>
                             <a type="button" class="btn" onclick="showInfo('info2')" id="infoLink2">All Students</a>
                             <a type="button" class="btn" onclick="showInfo('info3')" id="infoLink3">Assign Score For</a>
-                            <a type="button" class="btn" onclick="showInfo('info4')" id="infoLink4">Update announcement</a>
+                            <a type="button" class="btn" onclick="showInfo('info4')" id="infoLink4">Update
+                                announcement</a>
                         </div><br>
                         <script>
                             const infoLink1 = document.getElementById('infoLink1');
@@ -387,7 +389,7 @@
                                         <div class="container">
                                             <div class="row justify-content-center">
                                                 <div class="col-15">
-                                                    <div class="table-responsive" style="text-align: center;">
+                                                    <div class="table-responsive">
                                                         <table class="table mb-0">
                                                             <thead>
                                                                 <tr class="bg-black">
@@ -418,24 +420,97 @@
                                                                     <td th:text="${teacher.workTime}"></td>
                                                                     <td>
                                                                         <label for="edit">
-                                                                <a th:href="@{/showFormForUpdate/{number}(number=${teacher.number})}"
-                                                                    class="h4 btn btn-primary">Edit</a>
-                                                                <a th:href="@{/deleteTeacher/{number}(number=${teacher.number})}"
-                                                                    class="h4 btn btn-danger">Delete</a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                                            <a th:href="@{/showFormForUpdate/{number}(number=${teacher.number})}"
+                                                                                class="h4 btn btn-primary">Edit</a>
+                                                                            <a th:href="@{/deleteTeacher/{number}(number=${teacher.number})}"
+                                                                                class="h4 btn btn-danger">Delete</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </section> <br>
+                            </section> <br>
                         </div>
                         <div id="info2" class="info-content" style="display: none;"><br>
-                            <!-- Content for information section -->
+                            <!-- all Student  -->
+                            <h2>All Students</h2><br>
+                            <section class="intro">
+                                <div class="gradient-custom-1 h-100 w-aut">
+                                    <div class="mask d-flex align-items-center h-100">
+                                        <div class="container-fluid">
+                                            <div class="row justify-content-center">
+                                                <div class="col-100">
+                                                    <div class="table-responsive">
+                                                        <table class="table mb-0">
+                                                            <thead>
+                                                                <tr class="bg-black">
+                                                                    <th scope="col">ID</th>
+                                                                    <th scope="col">Name</th>
+                                                                    <th scope="col">Gender</th>
+                                                                    <th scope="col">Group</th>
+                                                                    <th scope="col">Academy Year</th>
+                                                                    <th scope="col">Department</th>
+                                                                    
+                                                                    <th scope="col">Phone Number</th>
+                                                                    
+                                                                    <th scope="col">General</th>
+                                                                    <th scope="col"><i class='bx bx-edit-alt'
+                                                                            style="font-size: 25px;"></i></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr >
+                                                                    <th scope="row" style="color: #666666;"
+                                                                        >e20210429
+                                                                    </th>
+                                                                    <td>
+                                                                        <label>CHAN</label>
+                                                                        <label>SUVANNET</label>
+                                                                    </td>
+                                                                    <td>Male</td>
+                                                                    <td>A</td>
+                                                                    <td>I3</td>
+                                                                    <td>GIC</td>
+                                                                    <td>0889 566 929</td>
+                                                                    <td>Sponsorship form CADT</td>
+                                                                    <td>
+                                                                        <label for="edit">
+                                                                            <a class=" h4 text-success" alt="detail" title="Details" style="font-size: 30px;"><i class='bx bxs-user-detail'></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr >
+                                                                    <th scope="row" style="color: #666666;"
+                                                                        >e20210429
+                                                                    </th>
+                                                                    <td>
+                                                                        <label>CHAN</label>
+                                                                        <label>SUVANNET</label>
+                                                                    </td>
+                                                                    <td>Male</td>
+                                                                    <td>A</td>
+                                                                    <td>I3</td>
+                                                                    <td>GIC</td>
+                                                                    <td>0889 566 929</td>
+                                                                    <td>NULL</td>
+                                                                    <td>
+                                                                        <label for="edit">
+                                                                            <a href="https://www.youtube.com/" class=" h4 text-success" alt="detail" title="Details" style="font-size: 30px;"><i class='bx bxs-user-detail'></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section> <br>
                         </div>
                         <div id="info3" class="info-content" style="display: none;"><br>
                             <!-- Content for information section -->
@@ -446,11 +521,11 @@
                         <script>
                             function showInfo(infoId) {
                                 const infoContents = document.querySelectorAll('.info-content');
-                
+
                                 infoContents.forEach(content => {
                                     content.style.display = 'none';
                                 });
-                
+
                                 const selectedInfo = document.getElementById(infoId);
                                 if (selectedInfo) {
                                     selectedInfo.style.display = 'block';
@@ -565,15 +640,15 @@
                                                     <form class="row g-3">
                                                         <div class="col-md-6">
                                                             <label for="FisrtName_stu" class="form-label">First Name</label>
-                                                            <input type="text" class="form-control" id="Fname_stu" required/>
+                                                            <input type="text" class="form-control" id="Fname_stu" required />
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label for="LastName_stu" class="form-label">Last Name</label>
-                                                            <input type="text" class="form-control" id="Lname_stu" required/>
+                                                            <input type="text" class="form-control" id="Lname_stu" required />
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label for="id_stu" class="form-label">ID Student</label>
-                                                            <input type="text" class="form-control" id="id_stu" required/>
+                                                            <input type="text" class="form-control" id="id_stu" required />
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 9px;">
                                                             <label for="inputPassword4" class="form-label">Group</label>
@@ -599,19 +674,19 @@
 
                                                         <div class="col-md-3">
                                                             <label for="academy_stu" class="form-label">Academy Year</label>
-                                                            <input type="text" class="form-control" id="academy_stu" required/>
+                                                            <input type="text" class="form-control" id="academy_stu" required />
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label for="dp_stu" class="form-label">Department</label>
-                                                            <input type="text" class="form-control" id="dp_stu" required/>
+                                                            <input type="text" class="form-control" id="dp_stu" required />
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label for="phone_stu" class="form-label">Phone Number</label>
-                                                            <input type="text" class="form-control" id="phone_stu" required/>
+                                                            <input type="text" class="form-control" id="phone_stu" required />
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label for="email_stu" class="form-label">Email</label>
-                                                            <input type="text" class="form-control" id="email_stu" required/>
+                                                            <input type="text" class="form-control" id="email_stu" required />
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="col-md-6" style="display: flex; gap: 30px; text-align: center;">
@@ -627,11 +702,11 @@
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label for="dob_stu" class="form-label">Date Of Birth</label>
-                                                            <input type="date" class="form-control" id="dob_stu" required/>
+                                                            <input type="date" class="form-control" id="dob_stu" required />
                                                         </div>
                                                         <div class="col-md-4">
                                                             <label for="inputState" class="form-label">State</label>
-                                                            <input type="text" class="form-control" id="state_stu" required/>
+                                                            <input type="text" class="form-control" id="state_stu" required />
                                                         </div>
                                                         <div class="col-md-2">
                                                             <label for="general_stu" class="form-label">General</label>
