@@ -358,7 +358,7 @@
                             <a type="button" class="btn active2" onclick="showInfo('info1')" id="infoLink1">All
                                 Teacher</a>
                             <a type="button" class="btn" onclick="showInfo('info2')" id="infoLink2">All Students</a>
-                            <a type="button" class="btn" onclick="showInfo('info3')" id="infoLink3">Assign Score For</a>
+                            <a type="button" class="btn" onclick="showInfo('info3')" id="infoLink3">All Subject</a>
                             <a type="button" class="btn" onclick="showInfo('info4')" id="infoLink4">Update
                                 announcement</a>
                         </div><br>
@@ -462,19 +462,22 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <th scope="row" style="color: #666666;">e20210429
+                                                                <tr th:each="student : ${students}">
+                                                                    <th scope="row" style="color: #666666;"
+                                                                        th:text="${student.nameid}">
                                                                     </th>
                                                                     <td>
-                                                                        <label>CHAN</label>
-                                                                        <label>SUVANNET</label>
+                                                                        <label
+                                                                            th:text="${student.firstName}"></label>
+                                                                        <label th:text="${student.lastName}"></label>
                                                                     </td>
-                                                                    <td>Male</td>
-                                                                    <td>A</td>
-                                                                    <td>I3</td>
-                                                                    <td>GIC</td>
-                                                                    <td>0889 566 929</td>
-                                                                    <td>Sponsorship form CADT</td>
+                                                                    <td th:text="${student.gender}"></td>
+                                                                    <td th:text="${student.group}"></td>
+                                                                    <td th:text="${student.academyYear}"></td>
+                                                                    <td th:text="${student.department}"></td>
+                                                                    <td th:text="${student.phone}"></td>
+                                                                    <td th:text="${student.general}">
+                                                                    </td>
                                                                     <td>
                                                                         <label for="edit">
                                                                             <a class=" h4 text-success" alt="detail"
@@ -483,28 +486,7 @@
                                                                                     class='bx bxs-user-detail'></i></a>
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <th scope="row" style="color: #666666;">e20210429
-                                                                    </th>
-                                                                    <td>
-                                                                        <label>CHAN</label>
-                                                                        <label>SUVANNET</label>
-                                                                    </td>
-                                                                    <td>Male</td>
-                                                                    <td>A</td>
-                                                                    <td>I3</td>
-                                                                    <td>GIC</td>
-                                                                    <td>0889 566 929</td>
-                                                                    <td>NULL</td>
-                                                                    <td>
-                                                                        <label for="edit">
-                                                                            <a href="https://www.youtube.com/"
-                                                                                class=" h4 text-success" alt="detail"
-                                                                                title="Details"
-                                                                                style="font-size: 30px;"><i
-                                                                                    class='bx bxs-user-detail'></i></a>
-                                                                    </td>
-                                                                </tr>
+
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -534,7 +516,8 @@
                                                             </thead>
                                                             <tbody>
                                                                 <tr th:each="subject : ${subjects}">
-                                                                    <th scope="row" style="color: #666666;" th:text="${subject.name}">
+                                                                    <th scope="row" style="color: #666666;"
+                                                                        th:text="${subject.name}">
                                                                     </th>
                                                                     <td th:text="${subject.credit}"></td>
                                                                 </tr>
@@ -670,87 +653,79 @@
                                             <div class="d-flex justify-content-center">
                                                 <div class="container h-100">
                                                     <!-- form for add new student -->
-                                                    <form class="row g-3">
+                                                    <form class="row g-3" th:action="@{/saveStudent}" th:object="${newStudent}" method="POST">
                                                         <div class="col-md-6">
-                                                            <label for="FisrtName_stu" class="form-label">First Name</label>
-                                                            <input type="text" class="form-control" id="Fname_stu" required />
+                                                            <label for="Fname_stu" class="form-label">First Name</label>
+                                                            <input type="text" class="form-control" id="Fname_stu" th:field="*{firstName}" required />
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label for="LastName_stu" class="form-label">Last Name</label>
-                                                            <input type="text" class="form-control" id="Lname_stu" required />
+                                                            <label for="Lname_stu" class="form-label">Last Name</label>
+                                                            <input type="text" class="form-control" id="Lname_stu" th:field="*{lastName}" required />
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label for="id_stu" class="form-label">ID Student</label>
-                                                            <input type="text" class="form-control" id="id_stu" required />
+                                                            <input type="text" class="form-control" id="id_stu" th:field="*{nameid}" required />
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 9px;">
                                                             <label for="inputPassword4" class="form-label">Group</label>
                                                             <div class="col-md-6" style="display: flex; gap: 30px; text-align: center;">
-                                                                <div class="form-check">
+                                                                <div class="form-check" th:field="*{group}">
                                                                     <input class="form-check-input" type="radio" name="Group" id="a" value="A" required />
-                                                                    <label class="form-check-label" for="GroupA">A</label>
+                                                                    <label class="form-check-label" for="a">A</label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="Group" id="b" value="B" />
-                                                                    <label class="form-check-label" for="GroupB">B</label>
+                                                                    <label class="form-check-label" for="b">B</label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="Group" id="c" value="C" />
-                                                                    <label class="form-check-label" for="GroupC">C</label>
+                                                                    <label class="form-check-label" for="c">C</label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="Group" id="d" value="D" />
-                                                                    <label class="form-check-label" for="GroupD">D</label>
+                                                                    <label class="form-check-label" for="d">D</label>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="col-md-3">
                                                             <label for="academy_stu" class="form-label">Academy Year</label>
-                                                            <input type="text" class="form-control" id="academy_stu" required />
+                                                            <input type="text" class="form-control" id="academy_stu" th:field="*{academyYear}" required />
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label for="dp_stu" class="form-label">Department</label>
-                                                            <input type="text" class="form-control" id="dp_stu" required />
+                                                            <input type="text" class="form-control" id="dp_stu" th:field="*{department}" required />
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label for="phone_stu" class="form-label">Phone Number</label>
-                                                            <input type="text" class="form-control" id="phone_stu" required />
+                                                            <input type="text" class="form-control" id="phone_stu" th:field="*{phone}" required />
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label for="email_stu" class="form-label">Email</label>
-                                                            <input type="text" class="form-control" id="email_stu" required />
+                                                            <input type="text" class="form-control" id="email_stu" th:field="*{email}" required />
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="col-md-6" style="display: flex; gap: 30px; text-align: center;">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="gender_stu" id="male" value="Male" required />
+                                                                    <input class="form-check-input" type="radio" name="gender_stu" id="male" value="Male" th:field="*{gender}" required />
                                                                     <label class="form-check-label" for="male">Male</label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="gender_stu" id="female" value="Female" />
+                                                                    <input class="form-check-input" type="radio" name="gender_stu" id="female" value="Female" th:field="*{gender}">
                                                                     <label class="form-check-label" for="female">Female</label>
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                         <div class="col-md-6">
-                                                            <label for="dob_stu" class="form-label">Date Of Birth</label>
-                                                            <input type="date" class="form-control" id="dob_stu" required />
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="inputState" class="form-label">State</label>
-                                                            <input type="text" class="form-control" id="state_stu" required />
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label for="general_stu" class="form-label">General</label>
-                                                            <input type="text" class="form-control" id="inputZip">
+                                                            <label for="inputZip" class="form-label">General</label>
+                                                            <input type="text" class="form-control" id="inputZip" th:field="*{general}">
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox" id="gridCheck">
                                                                 <label class="form-check-label" for="gridCheck">
-                                                Confirm From
-                                            </label>
+                                            Confirm Form
+                                        </label>
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
@@ -780,8 +755,8 @@
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox" id="gridCheck" required />
                                                                 <label class="form-check-label" for="gridCheck">
-                                                Confirm From
-                                            </label>
+                                            Confirm From
+                                        </label>
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
@@ -846,7 +821,8 @@
                                                                     <div class="card ">
                                                                         <div class="card-body">
                                                                             <h5 class="card-title">Students</h5>
-                                                                            <p class="card-text">Request Teacher to review Score again in one subject</p>
+                                                                            <p class="card-text">Request Teacher to review Score again in one subject
+                                                                            </p>
                                                                             <a href="#" class="btn btn-warning">Login</a>
                                                                         </div>
                                                                     </div>
@@ -870,7 +846,8 @@
                                                                 <div class="card">
                                                                     <div class="card-body">
                                                                         <h5 class="card-title">Principle</h5>
-                                                                        <p class="card-text">Can GRUD teacher, Student and Calculate final score students</p>
+                                                                        <p class="card-text">Can GRUD teacher, Student and Calculate final score students
+                                                                        </p>
                                                                         <a href="#" class="btn btn-primary">Login</a>
                                                                     </div>
                                                                 </div>
@@ -903,7 +880,8 @@
                                                                 <div class="card bg-primary">
                                                                     <div class="card-body">
                                                                         <h5 class="card-title">Principle</h5>
-                                                                        <p class="card-text">Can GRUD teacher, Student and Calculate final score students</p>
+                                                                        <p class="card-text">Can GRUD teacher, Student and Calculate final score students
+                                                                        </p>
                                                                         <a href="#" class="btn btn-light">Login</a>
                                                                     </div>
                                                                 </div>

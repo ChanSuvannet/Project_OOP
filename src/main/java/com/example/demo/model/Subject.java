@@ -16,8 +16,13 @@ public class Subject {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    
+    private long no;
+    public long getNo() {
+        return no;
+    }
+    public void setNo(long no) {
+        this.no = no;
+    }
     // subject name 
     @Column(name = "S_name")
     private String name;

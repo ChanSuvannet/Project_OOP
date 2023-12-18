@@ -17,34 +17,21 @@ public class TeacherServiceImpl implements TeacherService{
     @Autowired
     private TeacherRepository teacherRepository;
 
-    // read akk teacher from database
+
     @Override
     public List<Teacher> getAllTeachers() {
         return teacherRepository.findAll();
     }
-
-    // add new teacher
-    public void saveTeacher(Teacher teacher) {
-        String idToCheck = teacher.getId();
-        Optional<Teacher> existingTeacher = teacherRepository.findById(idToCheck);
-
-        if (existingTeacher.isEmpty()) {
-            // The teacher with the same ID doesn't exist, so save the new teacher
-            teacherRepository.save(teacher);
-        } else {
-            // Perform any specific action if the ID already exists, such as updating or ignoring
-            // Here, we are ignoring the duplicate entry for simplicity
-            System.out.println("Teacher with ID " + idToCheck + " already exists in the database.");
-        }
+    @Override
+    public void saveTeacher(Teacher teacher){
+        this.teacherRepository.save(teacher);
     }
-    
-    // deleted teacher
+
     @Override
 	public void deletedTeacherByNumber(long number) {
 		this.teacherRepository.deleteById(number);
 	}
-	
-    // update info teacher
+
     @Override
 	public Teacher getTeacherByNumber(long number) {
 		Optional<Teacher> optional = teacherRepository.findById(number);
@@ -52,7 +39,7 @@ public class TeacherServiceImpl implements TeacherService{
 		if (optional.isPresent()) {
 			teacher = optional.get();
 		} else {
-			throw new RuntimeException(" Teacher not found for id :: " + number);
+			throw new RuntimeException(" Employee not found for id :: " + number);
 		}
 		return teacher;
 	}

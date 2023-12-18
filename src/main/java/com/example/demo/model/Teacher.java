@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name ="teachers")
 public class Teacher {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long number;
@@ -63,7 +64,7 @@ public class Teacher {
     public String getSubject() {
         return subject;
     }
-
+    
     @Column(name = "email_teacher")
     private String email;
     public String getEmail() {
