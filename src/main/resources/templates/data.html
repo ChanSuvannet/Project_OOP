@@ -171,11 +171,9 @@
                                             <h2>Total Student</h2>
                                             <h1>0</h1>
                                             <p style="display: flex; justify-content: space-around;">
-                                                <label for="male"><strong
-                                                        >0</strong>&nbsp;&nbsp;Male</label>
+                                                <label for="male"><strong>0</strong>&nbsp;&nbsp;Male</label>
                                                 <label for="">|</label>
-                                                <label for="female"><strong
-                                                        >0</strong>&nbsp;&nbsp;Female</label>
+                                                <label for="female"><strong>0</strong>&nbsp;&nbsp;Female</label>
                                             </p>
                                         </div>
                                     </div>
@@ -455,18 +453,17 @@
                                                                     <th scope="col">Group</th>
                                                                     <th scope="col">Academy Year</th>
                                                                     <th scope="col">Department</th>
-                                                                    
+
                                                                     <th scope="col">Phone Number</th>
-                                                                    
+
                                                                     <th scope="col">General</th>
                                                                     <th scope="col"><i class='bx bx-edit-alt'
                                                                             style="font-size: 25px;"></i></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr >
-                                                                    <th scope="row" style="color: #666666;"
-                                                                        >e20210429
+                                                                <tr>
+                                                                    <th scope="row" style="color: #666666;">e20210429
                                                                     </th>
                                                                     <td>
                                                                         <label>CHAN</label>
@@ -480,12 +477,14 @@
                                                                     <td>Sponsorship form CADT</td>
                                                                     <td>
                                                                         <label for="edit">
-                                                                            <a class=" h4 text-success" alt="detail" title="Details" style="font-size: 30px;"><i class='bx bxs-user-detail'></i></a>
+                                                                            <a class=" h4 text-success" alt="detail"
+                                                                                title="Details"
+                                                                                style="font-size: 30px;"><i
+                                                                                    class='bx bxs-user-detail'></i></a>
                                                                     </td>
                                                                 </tr>
-                                                                <tr >
-                                                                    <th scope="row" style="color: #666666;"
-                                                                        >e20210429
+                                                                <tr>
+                                                                    <th scope="row" style="color: #666666;">e20210429
                                                                     </th>
                                                                     <td>
                                                                         <label>CHAN</label>
@@ -499,7 +498,11 @@
                                                                     <td>NULL</td>
                                                                     <td>
                                                                         <label for="edit">
-                                                                            <a href="https://www.youtube.com/" class=" h4 text-success" alt="detail" title="Details" style="font-size: 30px;"><i class='bx bxs-user-detail'></i></a>
+                                                                            <a href="https://www.youtube.com/"
+                                                                                class=" h4 text-success" alt="detail"
+                                                                                title="Details"
+                                                                                style="font-size: 30px;"><i
+                                                                                    class='bx bxs-user-detail'></i></a>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -513,7 +516,37 @@
                             </section> <br>
                         </div>
                         <div id="info3" class="info-content" style="display: none;"><br>
-                            <!-- Content for information section -->
+                            <!-- all Student  -->
+                            <h2>All Subject</h2><br>
+                            <section class="intro">
+                                <div class="gradient-custom-1 h-100 w-aut">
+                                    <div class="mask d-flex align-items-center h-100">
+                                        <div class="container">
+                                            <div class="row justify-content-center">
+                                                <div class="col-5">
+                                                    <div class="table-responsive">
+                                                        <table class="table  mb-0 border">
+                                                            <thead>
+                                                                <tr class="bg-black">
+                                                                    <th scope="col">Name</th>
+                                                                    <th scope="col">Credit</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="subject : ${subjects}">
+                                                                    <th scope="row" style="color: #666666;" th:text="${subject.name}">
+                                                                    </th>
+                                                                    <td th:text="${subject.credit}"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section> <br>
                         </div>
                         <div id="info4" class="info-content" style="display: none;"><br>
                             <!-- Content for information section -->
@@ -727,9 +760,36 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- time table  -->
+                                        <!-- add subject -->
                                         <div id="system3" class="system-content" style="display: none;">
+                                            <h2 class="d-flex justify-content-center" style="color: palevioletred;">Subject</h2><br>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="container h-100">
+                                                    <form class="row g-3" th:action="@{/saveSubject}" th:object="${newSubject}" method="POST">
+                                                        <div class="col-md-6">
+                                                            <label for="sname" class="form-label">Subject Name</label>
+                                                            <input type="text" class="form-control" id="sname" th:field="*{name}" required />
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="credit" class="form-label">Credit</label>
+                                                            <input type="number" class="form-control" id="lastName_techer" th:field="*{credit}" required />
+                                                        </div>
 
+                                                        <!-- Other form elements... -->
+                                                        <div class="col-12">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" id="gridCheck" required />
+                                                                <label class="form-check-label" for="gridCheck">
+                                                Confirm From
+                                            </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!-- announcement -->
                                         <div id="system4" class="system-content" style="display: none;">

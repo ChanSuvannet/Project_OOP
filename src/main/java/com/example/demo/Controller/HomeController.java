@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.model.Subject;
 import com.example.demo.model.Teacher;
+import com.example.demo.service.SubjectService;
 import com.example.demo.service.TeacherService;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
@@ -17,10 +19,13 @@ public class HomeController {
 
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private SubjectService subjectService;
 
     @GetMapping("/data")
     public String viewHomePage(Model model) {
 
+        // for teacher
         // show teacher form sql
         model.addAttribute("teachers", teacherService.getAllTeachers());
         // add new teacher
@@ -34,6 +39,11 @@ public class HomeController {
         int totalFemaleTeachers = teacherService.getTotalFemaleTeachers();
         model.addAttribute("totalMaleTeachers", totalMaleTeachers);
         model.addAttribute("totalFemaleTeachers", totalFemaleTeachers);
+        // * for subject
+        // show subject form sql
+        model.addAttribute("subjects", subjectService.getAllSubjects());
+        // add new subject
+        model.addAttribute("newSubject", new Subject());
         System.out.println("Loading data page");
         return "data";
     }
@@ -42,6 +52,12 @@ public class HomeController {
     @PostMapping("/saveTeacher")
     public String saveTeacher(@ModelAttribute("newTeacher") Teacher teacher){
         teacherService.saveTeacher(teacher);
+        return "redirect:/data"; // Redirect to the data page after saving
+    }
+    // add new teacher
+    @PostMapping("/saveSubject")
+    public String saveSubject(@ModelAttribute("newSubject") Subject subject){
+        subjectService.saveSubject(subject);
         return "redirect:/data"; // Redirect to the data page after saving
     }
     // deleted teacher
