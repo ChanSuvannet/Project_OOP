@@ -22,6 +22,7 @@ public class TeacherServiceImpl implements TeacherService{
     public List<Teacher> getAllTeachers() {
         return teacherRepository.findAll();
     }
+
     @Override
     public void saveTeacher(Teacher teacher){
         this.teacherRepository.save(teacher);
@@ -32,6 +33,7 @@ public class TeacherServiceImpl implements TeacherService{
 		this.teacherRepository.deleteById(number);
 	}
 
+    // update teacher 
     @Override
 	public Teacher getTeacherByNumber(long number) {
 		Optional<Teacher> optional = teacherRepository.findById(number);
@@ -39,10 +41,11 @@ public class TeacherServiceImpl implements TeacherService{
 		if (optional.isPresent()) {
 			teacher = optional.get();
 		} else {
-			throw new RuntimeException(" Employee not found for id :: " + number);
+			throw new RuntimeException(" Teacher not found for id :: " + number);
 		}
 		return teacher;
 	}
+    
     // total teacher
 	@Override
     public int getTotalTeachers() {
