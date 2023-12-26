@@ -8,8 +8,6 @@ import com.example.demo.repository.SubjectRepository;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
-    
-
     @Autowired
     private SubjectRepository subjectRepository;
 
@@ -21,5 +19,10 @@ public class SubjectServiceImpl implements SubjectService {
     // add new subject
     public void saveSubject(Subject subject) {
         subjectRepository.save(subject);
+    }
+    // function for find all subject size
+    @Override
+    public int getTotalSubjects(){
+        return subjectRepository.findAll().size();
     }
 }

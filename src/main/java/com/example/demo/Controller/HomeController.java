@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.Student;
 import com.example.demo.model.Subject;
@@ -24,6 +25,32 @@ public class HomeController {
     private SubjectService subjectService;
     @Autowired
     private StudentService studentService;
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
+     @GetMapping("/register")
+    public String Register() {
+        return "register";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam("loginName") String id,
+                        @RequestParam("loginPassword") String password,
+                        Model model) {
+
+        boolean isValidUser = isUserValid(id, password);
+
+        if (isValidUser) {
+            return "redirect:/data";
+        } else {
+            model.addAttribute("error", "Invalid credentials. Please try again.");
+            return "login"; 
+        }
+    }
+    private boolean isUserValid(String id, String password) {
+        return id.equals("e20210429") && password.equals("12345678");
+    }
     @GetMapping("/data")
     public String viewHomePage(Model model) {
 
@@ -46,11 +73,21 @@ public class HomeController {
         model.addAttribute("subjects", subjectService.getAllSubjects());
         // add new subject
         model.addAttribute("newSubject", new Subject());
-        // * for subject
+        // find all subject 
+        int getTotalSubjects = subjectService.getTotalSubjects();
+        model.addAttribute("totalSubjects", getTotalSubjects);
+        // * for Student
         // show subject form sql
         model.addAttribute("students", studentService.getAllStudents());
-        // add new subject
+        // add new student
         model.addAttribute("newStudent", new Student());
+        int TotalStudents = studentService.TotalStudents();
+        model.addAttribute("totalStudents", TotalStudents);
+         // Total male and female Student
+        int TotalMaleStudents = studentService.TotalMaleStudents();
+        int TotalFemaleStudents = studentService.TotalFemaleStudents();
+        model.addAttribute("totalMaleStudents", TotalMaleStudents);
+        model.addAttribute("totalFemaleStudents", TotalFemaleStudents);
         System.out.println("Loading data page");
         return "data";
     }

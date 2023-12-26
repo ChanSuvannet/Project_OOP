@@ -5,7 +5,11 @@ import java.util.List;
 
 
 public interface SubjectService {
+    // function get and store for  all subject form database
     List<Subject> getAllSubjects();
+    // save subject to data base
     void saveSubject(Subject subject);
+    // for find total subject in database
+    int getTotalSubjects();
     
 } 

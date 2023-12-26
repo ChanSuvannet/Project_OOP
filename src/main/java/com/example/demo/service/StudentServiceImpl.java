@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
     
-    
     @Autowired
     private StudentRepository studentRepository;
     
@@ -21,5 +20,22 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void saveStudent(Student student){
         studentRepository.save(student);
+    }
+    @Override
+    // total student
+    public int TotalStudents(){
+        return studentRepository.findAll().size();
+    }
+    @Override
+    // find male student
+    public int TotalMaleStudents(){
+        List<Student> maleStudents = studentRepository.findByGender("Male");
+        return maleStudents.size();
+    }
+    @Override
+    // find Female student
+    public int TotalFemaleStudents(){
+        List<Student> femaleStudents = studentRepository.findByGender("Female");
+        return femaleStudents.size();
     }
 }

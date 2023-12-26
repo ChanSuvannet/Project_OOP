@@ -38,7 +38,7 @@
         <div class="header__container">
 
             <img src="http://127.0.0.1:3000/src/main/resources/static/images/logo.png" alt="" class="header__img">
-            <a href="#" class="header__logo">School System</a>
+            <a href="#" class="header__logo">Principle</a>
 
             <div class="header__search">
                 <input type="search" placeholder="Search" class="header__input">
@@ -99,7 +99,7 @@
                                 <i class='bx bx-calendar nav__icon' style="font-size: 30px;"></i>
                                 <span class="nav__name">Events</span>
                             </a>
-                            <a href="#" class="nav__link">
+                            <a href="#" class="nav__link" onclick="showContent('content7')">
                                 <i class='bx bx-bookmark nav__icon' style="font-size: 30px;"></i>
                                 <span class="nav__name">Saved</span>
                             </a>
@@ -169,11 +169,11 @@
                                     <div class="totalStudent">
                                         <div class="info" style="text-align: center;">
                                             <h2>Total Student</h2>
-                                            <h1>0</h1>
+                                            <h1 th:text="${totalStudents}">0</h1>
                                             <p style="display: flex; justify-content: space-around;">
-                                                <label for="male"><strong>0</strong>&nbsp;&nbsp;Male</label>
+                                                <label for="male"><strong th:text="${totalMaleStudents}">0</strong>&nbsp;&nbsp;Male</label>
                                                 <label for="">|</label>
-                                                <label for="female"><strong>0</strong>&nbsp;&nbsp;Female</label>
+                                                <label for="female"><strong th:text="${totalFemaleStudents}">0</strong >&nbsp;&nbsp;Female</label>
                                             </p>
                                         </div>
                                     </div>
@@ -201,11 +201,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="searches" style="background-color: #ff437b;">
+                                <div class="searches" style="background-color: #ff965a;">
                                     <div class="">
                                         <div class="info" style="text-align: center;">
-                                            <h2>All Subject</h2>
-                                            <h1>20</h1>
+                                            <h2>All Subject</h2><br>
+                                            <h1 th:text="${totalSubjects}">0</h1>
                                         </div>
                                     </div>
                                 </div>
@@ -387,7 +387,7 @@
                                         <div class="container">
                                             <div class="row justify-content-center">
                                                 <div class="col-15">
-                                                    <div class="table-responsive">
+                                                    <div class="table-responsive border">
                                                         <table class="table mb-0">
                                                             <thead>
                                                                 <tr class="bg-black">
@@ -404,8 +404,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 <tr th:each="teacher : ${teachers}">
-                                                                    <th scope="row" style="color: #666666;" th:text="${teacher.id}">
-                                                                    </th>
+                                                                    <th scope="row" style="color: #666666;" th:text="${teacher.id}"></th>
                                                                     <td>
                                                                         <label th:text="${teacher.firstName}"></label>
                                                                         <label th:text="${teacher.lastName}"></label>
@@ -422,6 +421,8 @@
                                                                                 class="h4 btn btn-primary">Edit</a>
                                                                             <a th:href="@{/deleteTeacher/{number}(number=${teacher.number})}"
                                                                                 class="h4 btn btn-danger">Delete</a>
+                                                                            </label>
+                                                                    </td>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -443,28 +444,25 @@
                                         <div class="container-fluid">
                                             <div class="row justify-content-center">
                                                 <div class="col-100">
-                                                    <div class="table-responsive">
+                                                    <div class="table-responsive border">
                                                         <table class="table mb-0">
                                                             <thead>
-                                                                <tr class="bg-black">
+                                                                < class="bg-black">
                                                                     <th scope="col">ID</th>
                                                                     <th scope="col">Name</th>
                                                                     <th scope="col">Gender</th>
                                                                     <th scope="col">Group</th>
                                                                     <th scope="col">Academy Year</th>
                                                                     <th scope="col">Department</th>
-
                                                                     <th scope="col">Phone Number</th>
 
                                                                     <th scope="col">General</th>
-                                                                    <th scope="col"><i class='bx bx-edit-alt'
-                                                                            style="font-size: 25px;"></i></th>
-                                                                </tr>
+                                                                    <th scope="col"><i class='bx bx-edit-alt' style="font-size: 25px;"></i></th>
+                                                                    </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr th:each="student : ${students}">
-                                                                    <th scope="row" style="color: #666666;"
-                                                                        th:text="${student.nameid}">
+                                                                    <th scope="row" style="color: #666666;" th:text="${student.nameid}">
                                                                     </th>
                                                                     <td>
                                                                         <label th:text="${student.firstName}"></label>
@@ -777,8 +775,16 @@
                                         </div>
                                         <!-- announcement -->
                                         <div id="system4" class="system-content" style="display: none;">
-                                            <h1>System 4</h1>
+                                            <h2 class="d-flex justify-content-center" style="color: palevioletred;">Add Score to Student</h2><br>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="container">
+                                                    <form class="row g-3">
+
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <!-- java script code for switch constance  -->
                                         <script>
                                             function showSystem(systemId) {
                                                 const systems = document.querySelectorAll('.system-content');
@@ -793,117 +799,18 @@
                                                 }
                                             }
                                         </script>
+
                                     </div>
                                 </div>
-                                <!-- announcement -->
-                                <div id="content5" style="display: none;">
-                                    <h1>hello</h1>
-                                    <div>
-                                        <!-- principle -->
-                                        <section class="intro">
-                                            <div class="gradient-custom-1 h-100 w-aut">
-                                                <div class="mask d-flex align-items-center h-100">
-                                                    <div class="container">
-                                                        <p></p>
-                                                        <div class="row justify-content-center">
-                                                            <div class="row">
-                                                                <div class="col-sm-4">
-                                                                    <div class="card">
-                                                                        <div class="card-body">
-                                                                            <h5 class="card-title">Principle</h5>
-                                                                            <p class="card-text">Can GRUD teacher, Student and Calculate final score students</p>
-                                                                            <a href="#" class="btn btn-primary">Login</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="card">
-                                                                        <div class="card-body">
-                                                                            <h5 class="card-title">Teachers</h5>
-                                                                            <p class="card-text">Can assign score to students and update score
-                                                                            </p>
-                                                                            <a href="#" class="btn btn-danger">Login</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="card ">
-                                                                        <div class="card-body">
-                                                                            <h5 class="card-title">Students</h5>
-                                                                            <p class="card-text">Request Teacher to review Score again in one subject
-                                                                            </p>
-                                                                            <a href="#" class="btn btn-warning">Login</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section> <br>
-                                    </div>
-                                    <!-- teacher -->
-                                    <section class="intro">
-                                        <div class="gradient-custom-1 h-100 w-aut">
-                                            <div class="mask d-flex align-items-center h-100">
-                                                <div class="container">
-                                                    <p></p>
-                                                    <div class="row justify-content-center">
-                                                        <div class="row">
-                                                            <div class="col-sm-4">
-                                                                <div class="card">
-                                                                    <div class="card-body">
-                                                                        <h5 class="card-title">Principle</h5>
-                                                                        <p class="card-text">Can GRUD teacher, Student and Calculate final score students
-                                                                        </p>
-                                                                        <a href="#" class="btn btn-primary">Login</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <div class="card">
-                                                                    <div class="card-body bg-warning">
-                                                                        <h5 class="card-title">Teachers</h5>
-                                                                        <p class="card-text">Can assign score to students and update score
-                                                                        </p>
-                                                                        <a href="#" class="btn btn-danger">Login</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section> <br>
-                                    <!-- Student -->
-                                    <section class="intro">
-                                        <div class="gradient-custom-1 h-100 w-aut">
-                                            <div class="mask d-flex align-items-center h-100">
-                                                <div class="container">
-                                                    <p></p>
-                                                    <div class="row justify-content-center">
-                                                        <div class="row">
-                                                            <div class="col-sm-4">
-                                                                <div class="card bg-primary">
-                                                                    <div class="card-body">
-                                                                        <h5 class="card-title">Principle</h5>
-                                                                        <p class="card-text">Can GRUD teacher, Student and Calculate final score students
-                                                                        </p>
-                                                                        <a href="#" class="btn btn-light">Login</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </section>
-                                    </div>
+                                <!-- content6  -->
+                                <div id="content6" style="display: none">
+
+                                </div>
+                                <!-- content7  -->
+                                <div id="content7" style="display: none">
+                                    <h1>hello 7</h1>
                                 </div>
     </main>
-
     <!--========== MAIN JS ==========-->
     <script src="/src/main/resources/static/js/main.js"></script>
     <!--========== MAIN JS ==========-->
