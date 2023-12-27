@@ -25,4 +25,10 @@ public class SubjectServiceImpl implements SubjectService {
     public int getTotalSubjects(){
         return subjectRepository.findAll().size();
     }
+    // remove subject
+    
+    @Override
+	public void deletedSubjectByNo(long no) {
+		this.subjectRepository.deleteById(no);
+	}
 }

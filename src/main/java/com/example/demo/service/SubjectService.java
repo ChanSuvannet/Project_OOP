@@ -11,5 +11,7 @@ public interface SubjectService {
     void saveSubject(Subject subject);
     // for find total subject in database
     int getTotalSubjects();
+    // for Remove subject 
+    void deletedSubjectByNo(long no);
     
 } 

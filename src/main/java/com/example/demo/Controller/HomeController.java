@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +26,12 @@ public class HomeController {
     private SubjectService subjectService;
     @Autowired
     private StudentService studentService;
+
     @GetMapping("/login")
     public String showLoginForm() {
         return "login";
     }
-     @GetMapping("/register")
+    @GetMapping("/register")
     public String Register() {
         return "register";
     }
@@ -38,23 +40,24 @@ public class HomeController {
     public String login(@RequestParam("loginName") String id,
                         @RequestParam("loginPassword") String password,
                         Model model) {
-
+        
         boolean isValidUser = isUserValid(id, password);
 
         if (isValidUser) {
-            return "redirect:/data";
+            return "Welcome";
         } else {
             model.addAttribute("error", "Invalid credentials. Please try again.");
             return "login"; 
         }
     }
     private boolean isUserValid(String id, String password) {
-        return id.equals("e20210429") && password.equals("12345678");
+        return id.equals("e20210429") && password.equals("123");
     }
+    
     @GetMapping("/data")
     public String viewHomePage(Model model) {
 
-        // for teacher
+        // *! for teacher
         // show teacher form sql
         model.addAttribute("teachers", teacherService.getAllTeachers());
         // add new teacher
@@ -68,7 +71,7 @@ public class HomeController {
         int totalFemaleTeachers = teacherService.getTotalFemaleTeachers();
         model.addAttribute("totalMaleTeachers", totalMaleTeachers);
         model.addAttribute("totalFemaleTeachers", totalFemaleTeachers);
-        // * for subject
+        // *! for subject
         // show subject form sql
         model.addAttribute("subjects", subjectService.getAllSubjects());
         // add new subject
@@ -76,7 +79,7 @@ public class HomeController {
         // find all subject 
         int getTotalSubjects = subjectService.getTotalSubjects();
         model.addAttribute("totalSubjects", getTotalSubjects);
-        // * for Student
+        // *! for Student
         // show subject form sql
         model.addAttribute("students", studentService.getAllStudents());
         // add new student
@@ -120,9 +123,16 @@ public class HomeController {
     
     // deleted teacher
     @GetMapping("/deleteTeacher/{number}")
-	public String deleteEmployee(@PathVariable (value = "number") long number) {
+	public String deleteTeacher(@PathVariable (value = "number") long number) {
 		this.teacherService.deletedTeacherByNumber(number);
 		return "redirect:/data";
 	}
+
+    // deleted subject
+    @GetMapping("/deleteSubject/{no}")
+    public String deletedSubject(@PathVariable (value = "no") long no){
+        this.subjectService.deletedSubjectByNo(no);
+        return "redirect:/data";
+    }
 }
 
