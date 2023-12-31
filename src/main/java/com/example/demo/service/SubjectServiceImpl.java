@@ -25,6 +25,7 @@ public class SubjectServiceImpl implements SubjectService {
     public int getTotalSubjects(){
         return subjectRepository.findAll().size();
     }
+
     // remove subject
     
     @Override

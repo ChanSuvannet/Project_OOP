@@ -1,21 +1,18 @@
 package com.example.demo.Controller;
 
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.Student;
 import com.example.demo.model.Subject;
 import com.example.demo.model.Teacher;
+import com.example.demo.model.User;
 import com.example.demo.service.StudentService;
 import com.example.demo.service.SubjectService;
 import com.example.demo.service.TeacherService;
+import com.example.demo.service.UserService;
 
 @Controller
 public class HomeController {
@@ -26,113 +23,121 @@ public class HomeController {
     private SubjectService subjectService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/login")
     public String showLoginForm() {
         return "login";
     }
+
     @GetMapping("/register")
-    public String Register() {
+    public String Register( Model model) {
+        ModelWithUserData(model);
         return "register";
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("loginName") String id,
-                        @RequestParam("loginPassword") String password,
-                        Model model) {
-        
-        boolean isValidUser = isUserValid(id, password);
+    public String login(@RequestParam("loginName") String UserId,
+            @RequestParam("loginPassword") String password,
+            Model model) {
+        User user = userService.validateUser(UserId, password);
 
-        if (isValidUser) {
+        if (user != null) {
+            model.addAttribute("user", user);
             return "Welcome";
         } else {
             model.addAttribute("error", "Invalid credentials. Please try again.");
-            return "login"; 
+            return "login";
         }
     }
-    private boolean isUserValid(String id, String password) {
-        return id.equals("e20210429") && password.equals("123");
-    }
-    
+    // Display home page with data
     @GetMapping("/data")
     public String viewHomePage(Model model) {
+        // model with data for the view
+        ModelWithTeacherData(model);
+        ModelWithSubjectData(model);
+        ModelWithStudentData(model);
 
-        // *! for teacher
-        // show teacher form sql
-        model.addAttribute("teachers", teacherService.getAllTeachers());
-        // add new teacher
-        model.addAttribute("newTeacher", new Teacher());
-        // total teacher
-        // Retrieve total number of teachers
-        int totalTeachers = teacherService.getTotalTeachers();
-        model.addAttribute("totalTeachers", totalTeachers);
-        // Total male and female teachers
-        int totalMaleTeachers = teacherService.getTotalMaleTeachers();
-        int totalFemaleTeachers = teacherService.getTotalFemaleTeachers();
-        model.addAttribute("totalMaleTeachers", totalMaleTeachers);
-        model.addAttribute("totalFemaleTeachers", totalFemaleTeachers);
-        // *! for subject
-        // show subject form sql
-        model.addAttribute("subjects", subjectService.getAllSubjects());
-        // add new subject
-        model.addAttribute("newSubject", new Subject());
-        // find all subject 
-        int getTotalSubjects = subjectService.getTotalSubjects();
-        model.addAttribute("totalSubjects", getTotalSubjects);
-        // *! for Student
-        // show subject form sql
-        model.addAttribute("students", studentService.getAllStudents());
-        // add new student
-        model.addAttribute("newStudent", new Student());
-        int TotalStudents = studentService.TotalStudents();
-        model.addAttribute("totalStudents", TotalStudents);
-         // Total male and female Student
-        int TotalMaleStudents = studentService.TotalMaleStudents();
-        int TotalFemaleStudents = studentService.TotalFemaleStudents();
-        model.addAttribute("totalMaleStudents", TotalMaleStudents);
-        model.addAttribute("totalFemaleStudents", TotalFemaleStudents);
         System.out.println("Loading data page");
         return "data";
     }
+    // model for user
+    private void ModelWithUserData(Model model){
+        model.addAttribute("newUser", new User());
+    }
+    // model with teacher data
+    private void ModelWithTeacherData(Model model) {
+        model.addAttribute("teachers", teacherService.getAllTeachers());
+        model.addAttribute("newTeacher", new Teacher());
+        model.addAttribute("totalTeachers", teacherService.getTotalTeachers());
+        model.addAttribute("totalMaleTeachers", teacherService.getTotalMaleTeachers());
+        model.addAttribute("totalFemaleTeachers", teacherService.getTotalFemaleTeachers());
+    }
 
-    // for update teacher
+    // model with subject data
+    private void ModelWithSubjectData(Model model) {
+        model.addAttribute("subjects", subjectService.getAllSubjects());
+        model.addAttribute("newSubject", new Subject());
+        model.addAttribute("totalSubjects", subjectService.getTotalSubjects());
+    }
+
+    // model with student data
+    private void ModelWithStudentData(Model model) {
+        model.addAttribute("students", studentService.getAllStudents());
+        model.addAttribute("newStudent", new Student());
+        model.addAttribute("totalStudents", studentService.TotalStudents());
+        model.addAttribute("totalMaleStudents", studentService.TotalMaleStudents());
+        model.addAttribute("totalFemaleStudents", studentService.TotalFemaleStudents());
+    }
+
+    // Display form for updating teacher
     @GetMapping("/showFormForUpdate/{number}")
-	public String showFormForUpdate(@PathVariable ( value = "number") long number, Model model) {
-		Teacher teacher = teacherService.getTeacherByNumber(number);
-		model.addAttribute("teacher", teacher);
-		return "update";
-	}
-    // add new teacher
+    public String showFormForUpdate(@PathVariable(value = "number") long number, Model model) {
+        Teacher teacher = teacherService.getTeacherByNumber(number);
+        model.addAttribute("teacher", teacher);
+        return "update";
+    }
+
+    // saveUser
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute("newUser") User user) throws InterruptedException {
+        userService.saveUser(user);
+        Thread.sleep(7000);
+         return "redirect:/login";
+    }
+    // Process new teacher form
     @PostMapping("/saveTeacher")
-    public String saveTeacher(@ModelAttribute("newTeacher") Teacher teacher){
+    public String saveTeacher(@ModelAttribute("newTeacher") Teacher teacher) {
         teacherService.saveTeacher(teacher);
         return "redirect:/data"; // Redirect to the data page after saving
     }
-    // add new subject
+
     @PostMapping("/saveSubject")
     public String saveSubject(@ModelAttribute("newSubject") Subject subject){
         subjectService.saveSubject(subject);
+    
         return "redirect:/data"; // Redirect to the data page after saving
     }
-     // add new subject
+
+    // Process new student form
     @PostMapping("/saveStudent")
-    public String saveStudent(@ModelAttribute("newStudent") Student student){
+    public String saveStudent(@ModelAttribute("newStudent") Student student) {
         studentService.saveStudent(student);
         return "redirect:/data"; // Redirect to the data page after saving
     }
-    
-    // deleted teacher
-    @GetMapping("/deleteTeacher/{number}")
-	public String deleteTeacher(@PathVariable (value = "number") long number) {
-		this.teacherService.deletedTeacherByNumber(number);
-		return "redirect:/data";
-	}
 
-    // deleted subject
+    // Delete teacher
+    @GetMapping("/deleteTeacher/{number}")
+    public String deleteTeacher(@PathVariable(value = "number") long number) {
+        this.teacherService.deletedTeacherByNumber(number);
+        return "redirect:/data";
+    }
+
+    // Delete subject
     @GetMapping("/deleteSubject/{no}")
-    public String deletedSubject(@PathVariable (value = "no") long no){
+    public String deletedSubject(@PathVariable(value = "no") long no) {
         this.subjectService.deletedSubjectByNo(no);
         return "redirect:/data";
     }
 }
-

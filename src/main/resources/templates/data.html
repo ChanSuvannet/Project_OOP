@@ -225,7 +225,7 @@
                                     function drawChart() {
                                         // Set Data
                                         const data = google.visualization.arrayToDataTable([
-                                            ['Contry', 'Mhl'],
+                                            ['Grade', 'Mhl'],
                                             ['GPA 4.0', 54.8],
                                             ['GPA 3.5', 48.6],
                                             ['GPA 3.0', 44.4],
@@ -309,35 +309,25 @@
                                             <div class="table-responsive bg-white">
                                                 <table class="table mb-0">
                                                     <thead>
-                                                        <tr class="bg-black">
+                                                        <tr class="bg-black" style="color: #fd81b3;">
                                                             <th scope="col">ID</th>
                                                             <th scope="col">NAME</th>
                                                             <th scope="col">Group</th>
-                                                            <th scope="col">OOP</th>
-                                                            <th scope="col">MATH</th>
-                                                            <th scope="col">ALGO</th>
-                                                            <th scope="col">RESEARCH</th>
-                                                            <th scope="col">ENGLISH</th>
-                                                            <th scope="col">C++</th>
+                                                            <th scope="col" th:each="subject : ${subjects}" th:text="${subject.name}"></th>
                                                             <th scope="col">TOTAL SCORE</th>
                                                             <th scope="col">AVERAGE</th>
                                                             <th scope="col">RANK</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <th scope="row" style="color: #666666;">e20210429</th>
-                                                            <td>CHAN SUVANNET</td>
-                                                            <td>A</td>
-                                                            <td>30</td>
-                                                            <td>50</td>
-                                                            <td>60</td>
-                                                            <td>60</td>
-                                                            <td>50</td>
-                                                            <td>40</td>
-                                                            <td>290</td>
-                                                            <td>48.33</td>
-                                                            <td>10</td>
+                                                        <tr th:each="student : ${students}">
+                                                            <th scope="row" style="color: #666666;" th:text="${student.nameid}">
+                                                            </th>
+                                                            <td style="color: #666666;">
+                                                                <label th:text="${student.firstName}"></label>
+                                                                <label th:text="${student.lastName}"></label>
+                                                            </td>
+                                                            <td></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -520,6 +510,8 @@
                                                                     <td th:text="${subject.credit}"></td>
                                                                     <td>
                                                                         <label for="removesubject">
+                                                                            <a th:href="@{/deleteSubject/{no}(no=${subject.no})}"
+                                                                            class="h4 btn btn-primary">Edit</a>
                                                                             <a th:href="@{/deleteSubject/{no}(no=${subject.no})}"
                                                                                 class="h4 btn btn-danger">Delete</a>
                                                                         </label>
@@ -821,8 +813,30 @@
     <script src="/src/main/resources/static/js/main.js"></script>
     <!--========== MAIN JS ==========-->
     <script th:src="@{/js/main.js}"></script>
-
     <!-- function for display content -->
+    <script>
+        // Assuming you have a function to validate the username and password
+        function validateUser(username, password) {
+            // Replace these with actual validation logic
+            return username === "admin" && password === "168";
+        }
+
+        // Call this function when the user attempts to log in
+        function onLoginAttempt() {
+            var username = document.getElementById("loginName").value;
+            var password = document.getElementById("loginPassword").value;
+
+            if (validateUser(username, password)) {
+                // User is valid, show the content
+                document.getElementById("content3").style.display = "block";
+                document.getElementById("content4").style.display = "block";
+            } else {
+                // Invalid user, hide the content
+                document.getElementById("content3").style.display = "none";
+                document.getElementById("content4").style.display = "none";
+            }
+        }
+    </script>
     <script>
         function showContent(contentId) {
             const contents = document.querySelectorAll(".sidebar > div");

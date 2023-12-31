@@ -5,17 +5,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
-
-
 
 @Entity
 @Table(name = "students")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long ID;
+    private long ID;//PK
     
     @Column(name = "sringid")
     private String nameid;
@@ -98,5 +97,4 @@ public class Student {
     public void setGeneral(String general) {
         this.general = general;
     }
-    
 }

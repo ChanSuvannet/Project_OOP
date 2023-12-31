@@ -7,7 +7,6 @@ import com.example.demo.model.Student;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>{
-
-
     List<Student> findByGender(String stu_gender);
+    
 } 
