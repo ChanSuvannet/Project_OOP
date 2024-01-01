@@ -1,14 +1,18 @@
 package com.example.demo.Controller;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.model.Score;
 import com.example.demo.model.Student;
 import com.example.demo.model.Subject;
 import com.example.demo.model.Teacher;
 import com.example.demo.model.User;
+import com.example.demo.service.ScoreService;
 import com.example.demo.service.StudentService;
 import com.example.demo.service.SubjectService;
 import com.example.demo.service.TeacherService;
@@ -25,6 +29,8 @@ public class HomeController {
     private StudentService studentService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ScoreService scoreService;
 
     @GetMapping("/login")
     public String showLoginForm() {
@@ -58,9 +64,15 @@ public class HomeController {
         ModelWithTeacherData(model);
         ModelWithSubjectData(model);
         ModelWithStudentData(model);
+        ModelWithScoreData(model);
 
         System.out.println("Loading data page");
         return "data";
+    }
+    private void ModelWithScoreData(Model model){
+        model.addAttribute("saveScore", new Score());
+        model.addAttribute("scores", scoreService.getAllScores());
+        model.addAttribute("scoresGroupedByStudent", scoreService.getScoresGroupedByStudent());
     }
     // model for user
     private void ModelWithUserData(Model model){
@@ -98,13 +110,20 @@ public class HomeController {
         model.addAttribute("teacher", teacher);
         return "update";
     }
+    
 
+    // saveScore
+    @PostMapping("saveScore")
+    public String saveScore(@ModelAttribute("newScore") Score score){
+        scoreService.saveScore(score);
+        return "redirect:/data";
+    }
     // saveUser
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("newUser") User user) throws InterruptedException {
         userService.saveUser(user);
         Thread.sleep(7000);
-         return "redirect:/login";
+        return "redirect:/login";
     }
     // Process new teacher form
     @PostMapping("/saveTeacher")

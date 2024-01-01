@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www..thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>School System</title>
+    <!--========== BOX ICONS ==========-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- boot stap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Score</title>
+    <!-- action="#" th:action="@{/saveTeacher}" th:object="${teacher}" method="POST" -->
+
+    <body>
+        <br><br><br>
+        <div class="container">
+            <h2 style="justify-content: center; text-align: center;">Add Score to student for all subject in database </h2><br>
+            <form class="row g-3" action="#" th:action="@{/saveScore}" th:object="${score}" method="POST">
+                <input type="hidden" th:field="*{id}" />
+                <!-- Loop through subjects to create input fields for each subject's grade -->
+                <div th:each="subject : ${subjects}">
+                    <div class="col-md-2 d-flex">
+                        <label th:for="'grade_' + ${subject.id}" class="form-label" th:text="${subject.name}"></label>
+                        <input type="text" class="form-control" required th:field="*{grades[__${subject.id}__]}" th:id="'grade_' + ${subject.id}" />
+                    </div>
+                </div>
+                <!-- Other form elements... -->
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck" required />
+                        <label class="form-check-label" for="gridCheck">Confirm Form</label>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">ADD</button>
+                </div>
+            </form>
+        </div>
+    </body>
+
+</html>

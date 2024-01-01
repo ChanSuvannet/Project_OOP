@@ -1,10 +1,13 @@
 package com.example.demo.model;
 
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -38,4 +41,7 @@ public class Subject {
     public void setCredit(int credit) {
         this.credit = credit;
     }
+    
+    @OneToMany(mappedBy="subject")
+    private Set<Score> scores;
 }

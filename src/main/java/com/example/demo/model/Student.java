@@ -1,11 +1,16 @@
 package com.example.demo.model;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -97,4 +102,6 @@ public class Student {
     public void setGeneral(String general) {
         this.general = general;
     }
+    @OneToMany(mappedBy = "student")
+    private List<Score> scores;
 }
