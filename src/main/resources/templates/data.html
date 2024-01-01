@@ -326,10 +326,9 @@
                                                             </td>
                                                             <td th:text="${entry.value[0].student.group}"></td>
                                                             <td th:each="score : ${entry.value}" th:text="${score.grade}"></td>
-
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td th:text="${totalScore.get(entry.key)}"></td>
+                                                            <td th:text="${averageScore.get(entry.key)}"></td>
+                                                            <td th:text="${rank.get(entry.key)}"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

@@ -70,9 +70,13 @@ public class HomeController {
         return "data";
     }
     private void ModelWithScoreData(Model model){
+        // Add a new Score object to the model
         model.addAttribute("saveScore", new Score());
         model.addAttribute("scores", scoreService.getAllScores());
         model.addAttribute("scoresGroupedByStudent", scoreService.getScoresGroupedByStudent());
+        model.addAttribute("totalScore", scoreService.getTotalScoreByStudent());
+        model.addAttribute("averageScore", scoreService.getAverageScoreByStudent());
+        model.addAttribute("rank", scoreService.getRankByStudent());
     }
     // model for user
     private void ModelWithUserData(Model model){
