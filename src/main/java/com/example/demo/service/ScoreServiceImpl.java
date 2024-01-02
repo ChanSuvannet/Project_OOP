@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Score;
 import com.example.demo.repository.ScoreRepository;
+import com.google.protobuf.Option;
 
 @Service
 public class ScoreServiceImpl implements ScoreService {

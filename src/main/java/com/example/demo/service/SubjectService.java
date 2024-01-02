@@ -13,5 +13,5 @@ public interface SubjectService {
     int getTotalSubjects();
     // for Remove subject 
     void deletedSubjectByNo(long no);
-    
+    Subject getSubjectById(Long id);
 } 

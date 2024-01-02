@@ -32,4 +32,8 @@ public class SubjectServiceImpl implements SubjectService {
 	public void deletedSubjectByNo(long no) {
 		this.subjectRepository.deleteById(no);
 	}
+    @Override
+    public Subject getSubjectById(Long id) {
+        return subjectRepository.findById(id).orElse(null);
+    }
 }

@@ -38,4 +38,8 @@ public class StudentServiceImpl implements StudentService {
         List<Student> femaleStudents = studentRepository.findByGender("Female");
         return femaleStudents.size();
     }
+    @Override
+    public Student getStudentById(Long id) {
+        return studentRepository.findById(id).orElse(null);
+    }
 }

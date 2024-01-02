@@ -10,4 +10,5 @@ public interface StudentService {
     int TotalStudents();
     int TotalFemaleStudents();
     int TotalMaleStudents();
+    Student getStudentById(Long id);
 } 

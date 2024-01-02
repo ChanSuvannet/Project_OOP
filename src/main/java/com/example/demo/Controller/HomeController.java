@@ -18,6 +18,7 @@ import com.example.demo.service.SubjectService;
 import com.example.demo.service.TeacherService;
 import com.example.demo.service.UserService;
 
+
 @Controller
 public class HomeController {
 
@@ -115,13 +116,15 @@ public class HomeController {
         return "update";
     }
     
-
-    // saveScore
-    @PostMapping("saveScore")
-    public String saveScore(@ModelAttribute("newScore") Score score){
-        scoreService.saveScore(score);
-        return "redirect:/data";
-    }
+    @PostMapping("/saveScore")
+    public String saveScore(@ModelAttribute("newScore") Score score, @RequestParam("student") Long ID, @RequestParam("subject") Long no){
+    Student student = studentService.getStudentById(ID);
+    Subject subject = subjectService.getSubjectById(no);
+    score.setStudent(student);
+    score.setSubject(subject);
+    scoreService.saveScore(score);
+    return "redirect:/data";
+}
     // saveUser
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("newUser") User user) throws InterruptedException {
