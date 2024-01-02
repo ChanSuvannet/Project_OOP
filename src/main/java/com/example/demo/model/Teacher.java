@@ -61,14 +61,6 @@ public class Teacher {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    // @Column(name = "subject_name")
-    // private String subject;
-    // public void setSubject(String subject) {
-    //     this.subject = subject;
-    // }
-    // public String getSubject() {
-    //     return subject;
-    // }
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id") // Name of the foreign key column in the teachers table
     private Subject subject;

@@ -48,15 +48,17 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public Map<String, Double> getAverageScoreByStudent() {
-        List<Score> scores = getAllScores();
-        return scores.stream()
-            .collect(Collectors.groupingBy(score -> score.getStudent().getNameid(),
-                    Collectors.averagingDouble(Score::getGrade)));
-    }
+public Map<String, Double> getAverageScoreByStudent() {
+    List<Score> scores = getAllScores();
+    return scores.stream()
+        .collect(Collectors.groupingBy(score -> score.getStudent().getNameid(),
+                Collectors.averagingDouble(Score::getGrade)))
+        .entrySet().stream()
+        .collect(Collectors.toMap(Map.Entry::getKey, e -> Math.round(e.getValue() * 100.0) / 100.0));
+}
     @Override
     public Map<String, Long> getRankByStudent() {
-        List<Score> scores = getAllScores();
+        // List<Score> scores = getAllScores();
         Map<String, Double> averageScores = getAverageScoreByStudent();
     
         // Sort the averageScores in descending order

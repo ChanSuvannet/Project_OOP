@@ -1,14 +1,21 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -21,6 +28,12 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;//PK
     
+    public long getID() {
+        return ID;
+    }
+    public void setID(long ID) {
+        this.ID = ID;
+    }
     @Column(name = "sringid")
     private String nameid;
    
@@ -102,6 +115,6 @@ public class Student {
     public void setGeneral(String general) {
         this.general = general;
     }
-    @OneToMany(mappedBy = "student")
-    private List<Score> scores;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Score> scores = new ArrayList<>();
 }

@@ -124,7 +124,7 @@ public class HomeController {
     score.setSubject(subject);
     scoreService.saveScore(score);
     return "redirect:/data";
-}
+    }
     // saveUser
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("newUser") User user) throws InterruptedException {
