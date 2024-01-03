@@ -552,8 +552,8 @@
                                                     <td scope="row" style="color: #666666;" th:text="${score.grade}"></td>
                                                     <td>
                                                         <label for="edit">
-                                                                <a 
-                                                                    class="h4 btn btn-primary">Edit</a>
+                                                                <a th:href="@{/showFormForUpdateScore/{id}(id=${score.id})}"
+                                                                    class="h4 btn btn-primary" >Edit</a>
                                                                 <a
                                                                     class="h4 btn btn-danger">Delete</a>
                                                             </label>
@@ -592,8 +592,7 @@
                             Student</a>
                         <a type="button" class="btn" onclick="showSystem('system3')" id="subjectLink">Add New
                             Subject</a>
-                        <a type="button" class="btn" onclick="showSystem('system4')" id="announcementLink"> Add New
-                            Announcement</a>
+                        <a type="button" class="btn" onclick="showSystem('system4')" id="announcementLink"> Add Scores</a>
                     </div><br>
                     <script>
                         const homeLink = document.getElementById('homeLink');
@@ -853,18 +852,26 @@
                             </div>
                         </div><br>
                         <h2 class="d-flex justify-content-center" style="color: palevioletred;">ADD NEW SCORE</h2><br>
-                        <div class="d-flex justify-content-center">
+                        <div class="container-sm d-flex justify-content">
                             <div class="container h-100">
                                 <form class="row g-3" th:action="@{/saveScore}" method="POST">
-                                    <div class="col-md-6">
-                                        <label for="student" class="form-label">Nº Student</label>
-                                        <input type="number" class="form-control" id="student" name="student" required />
+                                    <div class="col-md-3">
+                                        <label for="student" class="form-label">Student</label>
+                                        <select id="student" name="student" class="form-select">
+                                            <option th:value="null" selected>Choose Student</option>
+                                            <!-- Assuming "students" is a list of student objects fetched from the database -->
+                                            <option th:each="student : ${students}" th:value="${student.ID}" th:text="${student.firstName}+' '+${student.lastName}"></option>
+                                        </select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="subject" class="form-label">Nº Subject</label>
-                                        <input type="number" class="form-control" id="subject" name="subject" required />
+                                    <div class="col-md-3">
+                                        <label for="subject" class="form-label">Subject</label>
+                                        <select id="subject" name="subject" class="form-select">
+                                            <option th:value="null" selected>Choose Subject</option>
+                                            <!-- Assuming "subjects" is a list of subject objects fetched from the database -->
+                                            <option th:each="subject : ${subjects}" th:value="${subject.no}" th:text="${subject.name}"></option>
+                                        </select>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <label for="grade" class="form-label">Grade:</label>
                                         <input type="number" step="0.1" class="form-control" id="grade" name="grade" required />
                                     </div>

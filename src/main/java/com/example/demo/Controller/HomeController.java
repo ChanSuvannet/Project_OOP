@@ -55,7 +55,7 @@ public class HomeController {
             return "Welcome";
         } else {
             model.addAttribute("error", "Invalid credentials. Please try again.");
-            return "login";
+            return "loading";
         }
     }
     // Display home page with data
@@ -116,6 +116,14 @@ public class HomeController {
         return "update";
     }
     
+    // Display form for updating update score for student
+    @GetMapping("/showFormForUpdateScore/{id}")
+    public String showFormForUpdateScore(@PathVariable(value = "id") long id, Model model) {
+        Score score = scoreService.getScoreByNumber(id);
+        model.addAttribute("score", score);
+        return "updateScore";
+    }
+    
     @PostMapping("/saveScore")
     public String saveScore(@ModelAttribute("newScore") Score score, @RequestParam("student") Long ID, @RequestParam("subject") Long no){
     Student student = studentService.getStudentById(ID);
@@ -129,7 +137,7 @@ public class HomeController {
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("newUser") User user) throws InterruptedException {
         userService.saveUser(user);
-        Thread.sleep(7000);
+        Thread.sleep(5000);
         return "redirect:/login";
     }
     // Process new teacher form

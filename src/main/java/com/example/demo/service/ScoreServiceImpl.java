@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Score;
+import com.example.demo.model.Teacher;
 import com.example.demo.repository.ScoreRepository;
 import com.google.protobuf.Option;
 
@@ -74,4 +75,15 @@ public Map<String, Double> getAverageScoreByStudent() {
     
         return ranks;
     }
+    @Override
+public Score getScoreByNumber(long id) {
+    Optional<Score> optional = scoreRepository.findById(id);
+    Score score = null;
+    if (optional.isPresent()) {
+        score = optional.get();
+    } else {
+        throw new RuntimeException("Score not found for id :: " + id);
+    }
+    return score;
+}
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www..thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>School System</title>
+    <!--========== BOX ICONS ==========-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- boot stap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Update score</title>
+    <!-- action="#" th:action="@{/saveTeacher}" th:object="${teacher}" method="POST" -->
+
+    <body>
+        <br><br><br>
+        <div class="container">
+            <h2 style="justify-content: center; text-align: center;">Update Score</h2><br>
+            <form class="row g-3" action="#" th:action="@{/saveScore}" th:object="${score}" method="POST">
+                <!-- Add hidden form field to handle update -->
+                <input type="hidden" th:field="*{id}" />
+                <div class="col-md-3">
+                    <label for="student" class="form-label">Student</label>
+                    <select id="student" name="student" class="form-select">
+                        
+                        <!-- Assuming "students" is a list of student objects fetched from the database -->
+                        <option th:value="${score.student.ID}" th:text="${score.student.firstName}+' '+${score.student.lastName}"></option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <select id="subject" name="subject" class="form-select">
+                        <!-- Assuming "subjects" is a list of subject objects fetched from the database -->
+                        <option th:value="${score.subject.no}" th:text="${score.subject.name}"></option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="grade" class="form-label">Grade:</label>
+                    <input type="number" step="0.1" class="form-control" id="grade" name="grade" required />
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Submit Score</button>
+                </div>
+            </form>
+        </div>
+    </body>
+
+</html>
