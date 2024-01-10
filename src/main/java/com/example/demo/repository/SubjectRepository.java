@@ -9,5 +9,4 @@ import com.example.demo.model.Subject;
 
 @Repository
 public interface SubjectRepository extends JpaRepository <Subject, Long> {
-
 }

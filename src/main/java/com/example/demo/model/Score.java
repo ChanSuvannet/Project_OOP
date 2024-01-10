@@ -11,12 +11,13 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 @Entity
+
 @Table(name = "scores")
 public class Score {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;//pk
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")

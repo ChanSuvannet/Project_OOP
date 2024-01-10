@@ -1,12 +1,13 @@
 package com.example.demo.Controller;
 
-import java.util.stream.Collectors;
-
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.model.Score;
 import com.example.demo.model.Student;
 import com.example.demo.model.Subject;
@@ -32,6 +33,7 @@ public class HomeController {
     private UserService userService;
     @Autowired
     private ScoreService scoreService;
+
 
     @GetMapping("/login")
     public String showLoginForm() {
@@ -67,10 +69,11 @@ public class HomeController {
         ModelWithStudentData(model);
         ModelWithScoreData(model);
 
+
         System.out.println("Loading data page");
         return "data";
     }
-    private void ModelWithScoreData(Model model){
+    private void ModelWithScoreData(Model model) {
         // Add a new Score object to the model
         model.addAttribute("saveScore", new Score());
         model.addAttribute("scores", scoreService.getAllScores());
@@ -78,9 +81,12 @@ public class HomeController {
         model.addAttribute("totalScore", scoreService.getTotalScoreByStudent());
         model.addAttribute("averageScore", scoreService.getAverageScoreByStudent());
         model.addAttribute("rank", scoreService.getRankByStudent());
+        model.addAttribute("gradeByStudent", scoreService.getGradeByStudent());
     }
+    
     // model for user
     private void ModelWithUserData(Model model){
+        model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("newUser", new User());
     }
     // model with teacher data
@@ -107,13 +113,24 @@ public class HomeController {
         model.addAttribute("totalMaleStudents", studentService.TotalMaleStudents());
         model.addAttribute("totalFemaleStudents", studentService.TotalFemaleStudents());
     }
-
     // Display form for updating teacher
     @GetMapping("/showFormForUpdate/{number}")
     public String showFormForUpdate(@PathVariable(value = "number") long number, Model model) {
         Teacher teacher = teacherService.getTeacherByNumber(number);
         model.addAttribute("teacher", teacher);
         return "update";
+    }
+    // Display form for updating User
+    @GetMapping("/User/{id}")
+    public String showFormForUpdateUser(@PathVariable(value = "id") long id, Model model) {
+        User user = userService.getUserById(id);
+        model.addAttribute("user1", user);
+        return "user";
+    }
+    
+    @GetMapping("/ForgotPassword")
+    public String ForgotPassword() {
+        return "ForgotPassword";
     }
     
     // Display form for updating update score for student

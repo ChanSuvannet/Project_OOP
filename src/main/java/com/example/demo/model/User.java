@@ -13,8 +13,14 @@ public class User {
     
     @Id // This annotation specifies the primary key of the entity
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generates the ID
-    private Long id;
+    private Long id;//PK
     
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     @Column(name = "UserName")
     private String fullName;
     public String getFullName() {
@@ -47,6 +53,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
     
 }

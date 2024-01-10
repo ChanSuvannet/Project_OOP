@@ -8,11 +8,15 @@ import com.example.demo.model.Score;
 import com.example.demo.model.Teacher;
 
 public interface ScoreService {
-    void  saveScore(Score score);
     List<Score> getAllScores();
+    void saveScore(Score score);
+    Score getScoreByNumber(long id);
+
     Map<String, List<Score>> getScoresGroupedByStudent();
     Map<String, Double> getTotalScoreByStudent();
     Map<String, Double> getAverageScoreByStudent();
     Map<String, Long> getRankByStudent();
-    Score getScoreByNumber(long id);
+    // Method to calculate GPA based on average score
+    Map<String, String> getGradeByStudent();
 }
+

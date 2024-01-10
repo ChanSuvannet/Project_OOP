@@ -179,22 +179,21 @@
                                 <div class="allsubject" style="background-color: #45FFCA;">
                                     <div class="allsubject">
                                         <div class="info" style="text-align: center;">
-                                            <h2 style="text-align: center;">Top 3 Student</h2>
+                                            <h2 style="text-align: center;">Top 3 Students</h2>
                                             <p></p>
-                                            <P style="display: flex; justify-content: space-around;">
-                                                <label style="color: gold;"><i class='bx bx-medal'></i></label>
-                                                <Label>Hia Kimsreng</Label>
+                                            <P style="display: flex;  gap: 48px;">
+                                                <label style="color: gold;">&nbsp;&nbsp;&nbsp;<i class='bx bx-medal'></i></label>
+                                                <label th:each="entry : ${scoresGroupedByStudent}" th:if="${rank.get(entry.key) == 1}" th:text="${entry.value[0].student.firstName+' '+ entry.value[0].student.lastName}">1</label>
                                             </P>
-                                            <P style="display: flex; justify-content: space-around;">
+                                            <P style="display: flex;  gap: 40px;">
                                                 <label style="color: silver;">&nbsp;<i class='bx bx-medal'></i><i
-                                                        class='bx bx-medal'></i></label>
-                                                <Label>Channa Sivlong</Label>
-
+                                                    class='bx bx-medal'></i></label>
+                                                <label th:each="entry : ${scoresGroupedByStudent}" th:if="${rank.get(entry.key) == 2}" th:text="${entry.value[0].student.firstName+' '+ entry.value[0].student.lastName}">1</label>
                                             </P>
-                                            <P style="display: flex; justify-content: space-around;">
+                                            <P style="display: flex;  gap: 28px;">
                                                 <label style="color: brown;"><i class='bx bx-medal'></i><i
-                                                        class='bx bx-medal'></i><i class='bx bx-medal'></i></label>
-                                                <Label>Eng Sokchheng</Label>
+                                                class='bx bx-medal'></i><i class='bx bx-medal'></i></label>
+                                                <label th:each="entry : ${scoresGroupedByStudent}" th:if="${rank.get(entry.key) == 3}" th:text="${entry.value[0].student.firstName+' '+ entry.value[0].student.lastName}">1</label>
                                             </P>
                                         </div>
                                     </div>
@@ -315,6 +314,7 @@
                                                             <th scope="col">TOTAL SCORE</th>
                                                             <th scope="col">AVERAGE</th>
                                                             <th scope="col">RANK</th>
+                                                            <th scope="col">Grade</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -329,6 +329,7 @@
                                                             <td th:text="${totalScore.get(entry.key)}"></td>
                                                             <td th:text="${averageScore.get(entry.key)}"></td>
                                                             <td th:text="${rank.get(entry.key)}"></td>
+                                                            <td th:text="${gradeByStudent.get(entry.key)}"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -808,7 +809,7 @@
                     <!-- Add Score student new page like update concept -->
                     <div id="system4" class="system-content" style="display: none;">
                         <!-- all Student  -->
-                        <div class="container d-flex justify-content-center">
+                        <!-- <div class="container d-flex justify-content-center">
                             <div class="container justify-content-center h-100" style="display: flex; gap: 40px;">
                                 <div class="col-md-4">
 
@@ -850,7 +851,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div><br>
+                        </div><br> -->
                         <h2 class="d-flex justify-content-center" style="color: palevioletred;">ADD NEW SCORE</h2><br>
                         <div class="container-sm d-flex justify-content">
                             <div class="container h-100">
@@ -898,14 +899,6 @@
                         </script>
 
                     </div>
-                </div>
-                <!-- content6  -->
-                <div id="content6" style="display: none">
-
-                </div>
-                <!-- content7  -->
-                <div id="content7" style="display: none">
-                    <h1>hello 7</h1>
                 </div>
     </main>
     <!--========== MAIN JS ==========-->
