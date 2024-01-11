@@ -1,10 +1,6 @@
 package com.example.demo.Controller;
-
-import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +13,10 @@ import com.example.demo.service.ScoreService;
 import com.example.demo.service.StudentService;
 import com.example.demo.service.SubjectService;
 import com.example.demo.service.TeacherService;
-import com.example.demo.service.UserService;
-
-
+import com.example.demo.service.UserService;  
 @Controller
 public class HomeController {
-
+    
     @Autowired
     private TeacherService teacherService;
     @Autowired
@@ -33,7 +27,8 @@ public class HomeController {
     private UserService userService;
     @Autowired
     private ScoreService scoreService;
-
+    @Autowired
+    private JavaMailSender mailSender;
 
     @GetMapping("/login")
     public String showLoginForm() {
@@ -41,7 +36,7 @@ public class HomeController {
     }
 
     @GetMapping("/register")
-    public String Register( Model model) {
+    public String Register(Model model) {
         ModelWithUserData(model);
         return "register";
     }
@@ -60,6 +55,7 @@ public class HomeController {
             return "loading";
         }
     }
+
     // Display home page with data
     @GetMapping("/data")
     public String viewHomePage(Model model) {
@@ -69,10 +65,10 @@ public class HomeController {
         ModelWithStudentData(model);
         ModelWithScoreData(model);
 
-
         System.out.println("Loading data page");
         return "data";
     }
+
     private void ModelWithScoreData(Model model) {
         // Add a new Score object to the model
         model.addAttribute("saveScore", new Score());
@@ -83,12 +79,13 @@ public class HomeController {
         model.addAttribute("rank", scoreService.getRankByStudent());
         model.addAttribute("gradeByStudent", scoreService.getGradeByStudent());
     }
-    
+
     // model for user
-    private void ModelWithUserData(Model model){
+    private void ModelWithUserData(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("newUser", new User());
     }
+
     // model with teacher data
     private void ModelWithTeacherData(Model model) {
         model.addAttribute("teachers", teacherService.getAllTeachers());
@@ -113,6 +110,7 @@ public class HomeController {
         model.addAttribute("totalMaleStudents", studentService.TotalMaleStudents());
         model.addAttribute("totalFemaleStudents", studentService.TotalFemaleStudents());
     }
+
     // Display form for updating teacher
     @GetMapping("/showFormForUpdate/{number}")
     public String showFormForUpdate(@PathVariable(value = "number") long number, Model model) {
@@ -120,6 +118,7 @@ public class HomeController {
         model.addAttribute("teacher", teacher);
         return "update";
     }
+
     // Display form for updating User
     @GetMapping("/User/{id}")
     public String showFormForUpdateUser(@PathVariable(value = "id") long id, Model model) {
@@ -127,12 +126,30 @@ public class HomeController {
         model.addAttribute("user1", user);
         return "user";
     }
-    
+
     @GetMapping("/ForgotPassword")
-    public String ForgotPassword() {
+    public String showForgotPasswordForm() {
         return "ForgotPassword";
     }
-    
+    @PostMapping("/sendEmail")
+    public User sendEmail(@RequestParam String email) {
+        return userService.sendEmailToUser(email);
+    }
+    // @PostMapping("/sendEmail")
+    // public String sendEmail(@RequestParam("email") String email) throws InterruptedException{
+    //     // test send 
+    //     try {
+    //         SimpleMailMessage message = new SimpleMailMessage();
+    //         message.setFrom("SchoolITC@gmail.com");
+    //         message.setTo(email);
+    //         message.setSubject("Password Reset Request");
+    //         mailSender.send(message);
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         System.out.println("Cant't Send Message to this Email");
+    //     }
+    // return "redirect:/ForgotPassword";
+    // }
     // Display form for updating update score for student
     @GetMapping("/showFormForUpdateScore/{id}")
     public String showFormForUpdateScore(@PathVariable(value = "id") long id, Model model) {
@@ -140,16 +157,18 @@ public class HomeController {
         model.addAttribute("score", score);
         return "updateScore";
     }
-    
+
     @PostMapping("/saveScore")
-    public String saveScore(@ModelAttribute("newScore") Score score, @RequestParam("student") Long ID, @RequestParam("subject") Long no){
-    Student student = studentService.getStudentById(ID);
-    Subject subject = subjectService.getSubjectById(no);
-    score.setStudent(student);
-    score.setSubject(subject);
-    scoreService.saveScore(score);
-    return "redirect:/data";
+    public String saveScore(@ModelAttribute("newScore") Score score, @RequestParam("student") Long ID,
+            @RequestParam("subject") Long no) {
+        Student student = studentService.getStudentById(ID);
+        Subject subject = subjectService.getSubjectById(no);
+        score.setStudent(student);
+        score.setSubject(subject);
+        scoreService.saveScore(score);
+        return "redirect:/data";
     }
+
     // saveUser
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("newUser") User user) throws InterruptedException {
@@ -157,6 +176,7 @@ public class HomeController {
         Thread.sleep(5000);
         return "redirect:/login";
     }
+
     // Process new teacher form
     @PostMapping("/saveTeacher")
     public String saveTeacher(@ModelAttribute("newTeacher") Teacher teacher) {
@@ -165,9 +185,9 @@ public class HomeController {
     }
 
     @PostMapping("/saveSubject")
-    public String saveSubject(@ModelAttribute("newSubject") Subject subject){
+    public String saveSubject(@ModelAttribute("newSubject") Subject subject) {
         subjectService.saveSubject(subject);
-    
+
         return "redirect:/data"; // Redirect to the data page after saving
     }
 

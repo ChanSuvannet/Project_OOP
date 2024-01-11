@@ -10,9 +10,6 @@ public interface UserService {
     List<User> getAllUsers();
     void saveUser(User user);
     User validateUser(String userID, String password);
-    // //new reset password
-    // String sendEmail(User user);
     User getUserById(long id);
-    // String sendEmail(User user);
-
+    User sendEmailToUser(String email);
 } 
