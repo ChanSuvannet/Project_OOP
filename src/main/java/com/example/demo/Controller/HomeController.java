@@ -1,9 +1,11 @@
 package com.example.demo.Controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
 import com.example.demo.model.Score;
 import com.example.demo.model.Student;
 import com.example.demo.model.Subject;
@@ -13,10 +15,11 @@ import com.example.demo.service.ScoreService;
 import com.example.demo.service.StudentService;
 import com.example.demo.service.SubjectService;
 import com.example.demo.service.TeacherService;
-import com.example.demo.service.UserService;  
+import com.example.demo.service.UserService;
+
 @Controller
 public class HomeController {
-    
+
     @Autowired
     private TeacherService teacherService;
     @Autowired
@@ -27,8 +30,6 @@ public class HomeController {
     private UserService userService;
     @Autowired
     private ScoreService scoreService;
-    @Autowired
-    private JavaMailSender mailSender;
 
     @GetMapping("/login")
     public String showLoginForm() {
@@ -119,7 +120,7 @@ public class HomeController {
         return "update";
     }
 
-    // Display form for updating User
+    // Display form for updating password User
     @GetMapping("/User/{id}")
     public String showFormForUpdateUser(@PathVariable(value = "id") long id, Model model) {
         User user = userService.getUserById(id);
@@ -131,23 +132,47 @@ public class HomeController {
     public String showForgotPasswordForm() {
         return "ForgotPassword";
     }
-    @PostMapping("/sendEmail")
-    public User sendEmail(@RequestParam String email) {
-        return userService.sendEmailToUser(email);
+    @GetMapping("/sspage")
+    public String sspage() {
+        return "sspage";
     }
+
+    // @PostMapping("/sendMessage")
+    // public String sendMessage(@RequestParam String phone) throws
+    // InterruptedException {
+    // if (phone != null) {
+    // System.out.println("Phone number received: " + phone);
+    // Thread.sleep(4000);
+    // return userService.sendTelegram(phone);
+    // }
+    // return "No phone number provided.";
+    // }
+    @PostMapping("/sendEmail")
+    public RedirectView sendEmail(@RequestParam String email) throws InterruptedException {
+
+        if (email != null) {
+            System.out.println("Have value email .");
+            Thread.sleep(1000);
+            userService.sendEmailToUser(email);
+            return new RedirectView("sspage");
+        }
+        return null;
+    }
+
     // @PostMapping("/sendEmail")
-    // public String sendEmail(@RequestParam("email") String email) throws InterruptedException{
-    //     // test send 
-    //     try {
-    //         SimpleMailMessage message = new SimpleMailMessage();
-    //         message.setFrom("SchoolITC@gmail.com");
-    //         message.setTo(email);
-    //         message.setSubject("Password Reset Request");
-    //         mailSender.send(message);
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         System.out.println("Cant't Send Message to this Email");
-    //     }
+    // public String sendEmail(@RequestParam("email") String email) throws
+    // InterruptedException{
+    // // test send
+    // try {
+    // SimpleMailMessage message = new SimpleMailMessage();
+    // message.setFrom("SchoolITC@gmail.com");
+    // message.setTo(email);
+    // message.setSubject("Password Reset Request");
+    // mailSender.send(message);
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // System.out.println("Cant't Send Message to this Email");
+    // }
     // return "redirect:/ForgotPassword";
     // }
     // Display form for updating update score for student

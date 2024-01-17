@@ -106,7 +106,7 @@
                     </div>
                 </div>
 
-                <a href="#" class="nav__link nav__logout">
+                <a href="http://localhost:8080/login" class="nav__link nav__logout">
                     <i class='bx bx-log-out nav__icon'></i>
                     <span class="nav__name">Log Out</span>
                 </a>
@@ -181,6 +181,8 @@
                                         <div class="info" style="text-align: center;">
                                             <h2 style="text-align: center;">Top 3 Students</h2>
                                             <p></p>
+
+
                                             <P style="display: flex;  gap: 48px;">
                                                 <label style="color: gold;">&nbsp;&nbsp;&nbsp;<i class='bx bx-medal'></i></label>
                                                 <label th:each="entry : ${scoresGroupedByStudent}" th:if="${rank.get(entry.key) == 1}" th:text="${entry.value[0].student.firstName+' '+ entry.value[0].student.lastName}">1</label>

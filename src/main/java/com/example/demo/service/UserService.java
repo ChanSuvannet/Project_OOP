@@ -12,4 +12,5 @@ public interface UserService {
     User validateUser(String userID, String password);
     User getUserById(long id);
     User sendEmailToUser(String email);
+    // String sendTelegram(String phone);
 } 

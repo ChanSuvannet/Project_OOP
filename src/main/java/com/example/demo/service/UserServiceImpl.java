@@ -1,14 +1,15 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
@@ -25,13 +26,13 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-
+    // password 1111 -> Encrypt (sivlong)
     @Override
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
-
+ 
     // sivlong new update week06
     @Override
     public User validateUser(String userID, String password) {
@@ -57,24 +58,36 @@ public class UserServiceImpl implements UserService {
     }
     // send email to uer 
     @Override
-    public User sendEmailToUser(String email) {
-        Optional<User> optionalEmail = userRepository.findByEmail(email);
-        User user2 = null;
-        if (optionalEmail.isPresent()) {
-            user2 = optionalEmail.get();
-
-            // Create a SimpleMailMessage.
-            SimpleMailMessage message = new SimpleMailMessage();
-
-            message.setTo(user2.getEmail());
-            message.setSubject("Reset Your password");
-            message.setText("Hello,! You can reset your password at http://localhost:8080/User/"+ user2.getUserID());
-            // Send message
-            mailSender.send(message);
-
-        } else {
-            throw new RuntimeException(" User not found for This Email :: " + email);
-        }
-        return user2;
+public User sendEmailToUser(String email) {
+    Optional<User> optionalEmail = userRepository.findByEmail(email);
+    User user2 = null;
+    if (optionalEmail.isPresent()) {
+        user2 = optionalEmail.get();
+        RestTemplate restTemplate = new RestTemplate();
+        String website = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
+        String message = "<a href=\"www.localhost:8080/User/"+ user2.getId()  + "\"> Hello! You can reset your password here </a>";
+        Map<String, String> params = new HashMap<>();
+        params.put("chat_id", CHAT_ID);
+        params.put("text", message);
+        params.put("parse_mode", "HTML"); // Add this line
+        restTemplate.postForObject(website, params, String.class);
+    } else {
+        throw new RuntimeException(" User not found for This Email :: " + email);
     }
+    return user2;
+}
+    private static final String BOT_TOKEN = "6630897410:AAGeme9_he1baYsMhjgAwqNnzEVGI2mOD0g";
+    private static final String CHAT_ID = "1099740653";
+
+    // @Override
+    // public String sendTelegram(String phone){
+    //     RestTemplate restTemplate = new RestTemplate();
+    //     String website = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
+    //     String message = "Hello,! You can reset your password at http://localhost:8080/User/" + user2.getId();
+
+    //     Map<String, String> params = new HashMap<>();
+    //     params.put("chat_id", CHAT_ID);
+    //     params.put("text", message);
+    //     return restTemplate.postForObject(website, params, String.class);
+    // }
 }
