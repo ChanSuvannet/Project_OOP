@@ -20,18 +20,15 @@ import com.google.protobuf.Option;
 public class ScoreServiceImpl implements ScoreService {
     @Autowired
     private ScoreRepository scoreRepository;
-
-    // vanndy
     @Override
     public void saveScore(Score score) {
         scoreRepository.save(score);
     }
-
     @Override
     public List<Score> getAllScores() {
         return scoreRepository.findAll();
     }
-
+    // ..... more 
     // UPDATE
     @Override
     public Score getScoreByNumber(long id) {
